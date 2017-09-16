@@ -13,8 +13,15 @@ mainViewDown = function(){
 }
 contactView = function(){
 	get('container1').style.display = 'none';
+	resetForm();
 	get('container2').style.display = 'block';
 	window.scrollTo(0, 0);
+}
+function resetForm(){
+	get('name').value = "";
+	get('email').value = "";
+	get('message').value = "";
+	get('category').selectedIndex = 0;
 }
 function setContactView(){
 	contactView();
