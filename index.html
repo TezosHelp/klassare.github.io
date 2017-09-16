@@ -9,10 +9,20 @@
 		<link rel="shortcut icon" type="image/png" href="images/favicon2.png"/>
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+		<script src="views.js"></script>
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/jquery.scrollex.min.js"></script>
+		<script src="assets/js/jquery.scrolly.min.js"></script>
+		<script src="assets/js/skel.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+		<script src="assets/js/main.js"></script>
+		<script type="text/view" id="contactview">
+		</script>
 	</head>
 	<body>
-
-		<!-- Sidebar -->
+		<div id="container1" style="display:none">
+			<!-- Sidebar -->
 			<section id="sidebar">
 				<div class="inner">
 					<nav>
@@ -104,7 +114,11 @@
 							<div class="content">
 								<div class="inner">
 									<h2>Riot.im</h2>
-									<p>Tezos riot-channel where you can chat with the community.</p>
+									<p>Tezos riot-channel where you can chat with the community. Active rooms are: 
+									<a href="https://riot.im/app/#/room/#tezos:matrix.org" target="_blank">#tezos</a>, 
+									<a href="https://riot.im/app/#/room/#tezosmedia:matrix.org" target="_blank">#tezosmedia</a>, 
+									<a href="https://riot.im/app/#/room/#tezostrader:matrix.org" target="_blank">#tezostrader</a> and 
+									<a href="https://riot.im/app/#/room/#freenode_#tezos:matrix.org" target="_blank">#freenode_#tezos</a>.</p>
 									<ul class="actions">
 										<li><a href="https://riot.im/app/#/room/#tezos:matrix.org" target="_blank" class="button">Visit</a></li>
 									</ul>
@@ -249,20 +263,75 @@
 			<footer id="footer" class="wrapper style1-alt">
 				<div class="inner">
 					<ul class="menu">
-						<li>&copy Tezos.help, All rights reserved.</li><li><a href="mailto:info@tezos.help" target="_blank">Contact</a></li>
+						<li>&copy Tezos.help, All rights reserved.</li><li><a href="" onclick="return setContactView();">Contact</a></li>
 					</ul>
 				</div>
 			</footer>
+		</div>
+		<div id="container2" style="display:none">
+		<!-- Header -->
+			<header id="header">
+				<a href="" onclick="return setMainView();" class="title"><- Go Back</a>
+				<nav>
+					<ul>
+						<li><a href="" onclick="return setMainView();">Home</a></li>
+						<li><a href="" onclick="return setContactView();" class="active">Contact</a></li>
+					</ul>
+				</nav>
+			</header>
 
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.scrollex.min.js"></script>
-			<script src="assets/js/jquery.scrolly.min.js"></script>
-			<script src="assets/js/skel.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-			<script src="assets/js/main.js"></script>
+		<!-- Wrapper -->
+			<div id="wrapper">
+			<!-- Main -->
+				<section id="main" class="wrapper">
+					<div class="inner">
+						<h1 class="major">Contact</h1>
+						<!-- Form -->
+						<form method="post" target="_blank" action="https://formspree.io/info@tezos.help">
+							<div class="row uniform">
+								<div class="6u 12u$(xsmall)">
+									<input type="text" name="demo-name" id="name" value="" placeholder="Name" />
+								</div>
+								<div class="6u$ 12u$(xsmall)">
+									<input type="email" name="demo-email" id="email" value="" placeholder="Email" />
+								</div>
+								<div class="12u$">
+									<div class="select-wrapper">
+										<select name="category" id="demo-category">
+											<option value="">- Category -</option>
+											<option value="1">Official</option>
+											<option value="1">Community</option>
+											<option value="1">Delegation</option>
+											<option value="1">Michelson</option>
+											<option value="1">Tools</option>
+											<option value="1">Other</option>
+										</select>
+									</div>
+								</div>
+								<div class="12u$">
+									<textarea name="message" id="demo-message" placeholder="Enter your message" rows="6"></textarea>
+								</div>
+								<div class="12u$">
+									<ul class="actions">
+										<li><input type="submit" value="Send Message" class="special" /></li>
+										<li><input type="reset" value="Reset" /></li>
+									</ul>
+								</div>
+							</div>
+						</form>
+					</div>
+				</section>
+			</div>
 
+		<!-- Footer -->
+			<footer id="footer" class="wrapper alt">
+				<div class="inner">
+					<ul class="menu">
+						<li>&copy Tezos.help, All rights reserved.</li><li><a href="" onclick="return setContactView();">Contact</a></li>
+					</ul>
+				</div>
+			</footer>
+		</div>
 	</body>
 </html>
 <!-- Credit to https://html5up.net/ for template -->
