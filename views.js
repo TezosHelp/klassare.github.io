@@ -31,11 +31,10 @@ function setMainView(){
 	mainViewDown();
 	return false;
 }
-
 	//Help functions general
 function get(id){
 	return document.getElementById(id);
 }
 function echo(msg){
-	get('echoDiv').innerHTML = msg;
+	window.alert(msg);
 }
