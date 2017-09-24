@@ -5,6 +5,9 @@ python anywhere
 Future entries
 tezex.info
 tezbaker.cc
+https://github.com/tezoscommunity/wiki/wiki
+https://github.com/fab13n/lamtez
+http://173.254.236.122/
 
 Future categories:
 Wallets
