@@ -10,5 +10,7 @@ https://github.com/fab13n/lamtez
 http://173.254.236.122/
 
 Future categories:
+Voting
+News
 Wallets
 Exchanges
