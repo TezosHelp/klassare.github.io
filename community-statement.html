@@ -34,10 +34,13 @@
 					<form method="post" action="https://formspree.io/info@tezos.help">
 							<div class="row uniform">
 								<div class="6u 12u$(xsmall)">
-									<input type="text" name="name" id="name" value="" placeholder="Name" />
+									<input type="text" name="name" id="name" value="" placeholder="Name (can be sudonym)" required/>
 								</div>
 								<div class="6u$ 12u$(xsmall)">
-									<input type="text" name="role" id="role" value="" placeholder="Role" />
+									<input type="text" name="organisation" id="organisation" value="" placeholder="Organisation (optional)" />
+								</div>
+								<div class="12u$">
+									<input type="text" name="role" id="role" value="" placeholder="Role (dev, deligator, contributor, etc.)" />
 								</div>
 								<div class="12u$">
 									<ul class="actions">
@@ -54,6 +57,7 @@
 								<thead>
 									<tr>
 										<th>Name</th>
+										<th>Organisation</th>
 										<th>Role</th>
 									</tr>
 								</thead>
@@ -61,17 +65,21 @@
 									<tr>
 										<td>Person A</td>
 										<td></td>
+										<td></td>
 									</tr>
 									<tr>
 										<td>Person B</td>
+										<td></td>
 										<td></td>
 									</tr>
 									<tr>
 										<td>Person C</td>
 										<td></td>
+										<td></td>
 									</tr>
 									<tr>
 										<td>Person D</td>
+										<td></td>
 										<td></td>
 									</tr>
 								</tbody>
