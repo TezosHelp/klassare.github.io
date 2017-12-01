@@ -29,8 +29,29 @@
 				<section id="main" class="wrapper">
 					<div class="inner">
 						<h1 class="major">Community Statement</h1>
-						<p><span class="image left"><img src="images/tz_logo2.png" alt=""></span>[text here]</p>
-						<form method="post" action="https://formspree.io/info@tezos.help">
+						<p><span class="image left"><img src="images/tz_logo2.png" alt=""></span>The Tezos Foundation exists to enable the vision outlined in the Tezos Whitepaper. Given the behavior and inaction of the current board, we fail to see how they can satisfy this obligation. We sincerely wish the best for Mr. Gevers in his future endeavors, but changes need to be made immediately to the Foundation’s board for it to fulfill its mission. We request that each board member consider the following as it determines the Foundation’s future. The following are ways in which the Foundation has not met its obligation to advance the Tezos project and encourage a strong community:</p>
+<p><ol>
+<li>Critical lack of communication with the contributors, the larger development community, and the founders;</li>
+<li>Failure to fund, support and engage with the developers in order to ready the network for launch;v
+Complete lack of management and failure to proceed with the project goals that were stated prior to the ICO.;</li>
+<li>Failure of the Foundation to engage and use a public relations firm in a timely manner, and delays in marketing and accruing of goodwill to the Tezos name;</li>
+<li>The alleged impropriety of the Tezos Foundation by Mr. Gevers, and the failed release of an audit to the public on such matters. In addition, the insistence by Mr. Gevers to review the audit with the rest of the board despite an obvious conflict of interest;</li>
+<li>Mr. Gevers speaking to the press about internal Foundation matters before he informed the community, so that the community has had to rely on the digest of journalists, fear mongers and those who wish Tezos ill for information;</li>
+<li>Mr. Gevers’ failure to manage the Foundation in its intended fashion, as outlined by the charter and terms presented to the community. His misgovernance of  a Foundation with a massive endowment, and his recent failure in other technology ventures;</li>
+<li>The community is looking forward to rebuilding the lost trust in the Foundation upon Mr Gevers’ departure. We trust in the remaining board members to swiftly take the appropriate action for the good of the community and the future of the Tezos project. </li>
+</ol></p>
+<p>The following are the ways in which the community would like to see the situation resolved:</p>
+<p><ol>
+<li>Regardless of the current state or outcome of the audit, the immediate resignation of Mr. Gevers. The Community no longer has confidence in his leadership.  </li>
+<li>Immediate clarification of whether Mr. Gevers did or did not attempt to pay himself 750,000 XTZ and whether he represented this bonus as being worth 300,000 CHF.</li>
+<li>Publication to the wider community by the Foundation’s legal counsel of the audit investigating Mr. Gevers’ alleged misbehavior;</li>
+<li>With immediate effect, the disbursement of a sizeable budget to the development team for the completion of network development, test and deployment;</li>
+With immediate effect, the disbursement of a sizeable budget for community program funding, such as, but not limited to, the funding of a bug bounty program, Tezos ancillary utilities such as wallets, delegation and baking software, Validator Audit program, community forums, and other such community projects that have self-funded so far;
+<li>Introduce governance procedures into the Foundation to take into account the voice of community members. The Foundation will work with the community to come up with an acceptable method of making sure that its voice is adequately considered in decision making.</li>
+</ol></p>
+<p>The Tezos Foundation is more important than any single person and changes need to be made immediately to the Foundation. Once again, we wish Mr. Gevers well in the future. As a community we are incredibly optimistic about the potential that Tezos has. Arthur and the core team of developers are doing an incredible job of moving work forward despite difficult circumstances. With changes to the board Tezos will move forward and reach the incredible potential that it has to transform the blockchain sector.
+</p>
+						<form>
 							<div class="row uniform">
 								<div class="6u 12u$(xsmall)">
 									<input type="text" name="name" id="name" value="" placeholder="Name (can be sudonym)" required/>
@@ -43,7 +64,7 @@
 								</div>
 								<div class="12u$">
 									<ul class="actions">
-										<li><input type="submit" value="Sign" class="special" /></li>
+										<li><input type="button" id="sendPetition" value="Sign" class="special" /></li>
 										<li><input type="reset" value="Reset" /></li>
 									</ul>
 								</div>
@@ -60,13 +81,10 @@
 										<th>Role</th>
 									</tr>
 								</thead>
-								<tbody>
-									<tr>
-										<td>Person A</td>
-										<td></td>
-										<td></td>
+								<tbody id="petitionList">
 								</tbody>
 							</table>
+              <input style="float: right" type="button" id="loadMore" value="Load More" class="special" />
 						</div>
 					</div>
 					</div>
@@ -90,6 +108,6 @@
 			<script src="assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="assets/js/main.js"></script>
-
+			<script src="assets/js/petition.js"></script>
 	</body>
 </html>
