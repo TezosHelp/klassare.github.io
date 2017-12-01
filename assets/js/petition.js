@@ -16,8 +16,8 @@ $('document').ready(function(){
       showMsg("Please enter your name");
       return;
     }
-    if (name.length > 64 || organization.length > 64 || role.length > 64) {
-      showMsg("Please ensure all fields are less than 64 characters long");
+    if (name.length > 128 || organization.length > 128 || role.length > 128) {
+      showMsg("Please ensure all fields are less than 128 characters long");
       return;
     }
     $.ajax({
