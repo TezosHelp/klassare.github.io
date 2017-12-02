@@ -41,6 +41,7 @@ $('document').ready(function(){
       }
     });
   });
+  document.getElementById('germanVersion').style.display = 'none'; //temporary solution
 });
 function showMsg(m){
   alert(m);
@@ -81,4 +82,14 @@ function buildTable(d){
 }
 function encodeHTML(s) {
     return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+}
+function setLanguageGerman(){
+	document.getElementById('englishVersion').style.display = 'none';
+	document.getElementById('germanVersion').style.display = 'block';
+	return false;
+}
+function setLanguageEnglish(){
+	document.getElementById('germanVersion').style.display = 'none';
+	document.getElementById('englishVersion').style.display = 'block';
+	return false;
 }
