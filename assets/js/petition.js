@@ -42,6 +42,7 @@ $('document').ready(function(){
     });
   });
   document.getElementById('germanVersion').style.display = 'none'; //temporary solution
+  document.getElementById('changeToEnglish').style.display = 'none'; //temporary solution -> move to css
 });
 function showMsg(m){
   alert(m);
@@ -86,10 +87,12 @@ function encodeHTML(s) {
 function setLanguageGerman(){
 	document.getElementById('englishVersion').style.display = 'none';
 	document.getElementById('germanVersion').style.display = 'block';
+	document.getElementById('changeLanguage').innerHTML = "<a href=\"\" onclick=\"return setLanguageEnglish();\">English version</a>";
 	return false;
 }
 function setLanguageEnglish(){
 	document.getElementById('germanVersion').style.display = 'none';
 	document.getElementById('englishVersion').style.display = 'block';
+	document.getElementById('changeLanguage').innerHTML = "<a href=\"\" onclick=\"return setLanguageGerman();\">German version</a>";
 	return false;
 }
