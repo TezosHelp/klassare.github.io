@@ -41,8 +41,6 @@ $('document').ready(function(){
       }
     });
   });
-  document.getElementById('germanVersion').style.display = 'none'; //temporary solution
-  document.getElementById('changeToEnglish').style.display = 'none'; //temporary solution -> move to css
 });
 function showMsg(m){
   alert(m);
