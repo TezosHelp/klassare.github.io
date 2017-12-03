@@ -3926,6 +3926,6 @@
 
 		}
 	/* css for community statement */
-	span:lang(ger), p:lang(ger) {
+	span:lang(ger), p:lang(ger), input:lang(ger), ol:lang(ger) {
 		display: none;
 	}
