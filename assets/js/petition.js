@@ -5,9 +5,10 @@ $('document').ready(function(){
     updateTable();
   });
   $('.sendPetition').click(function(){
-    var name = $('#name').val(),
-    organization = $('#organization').val(),
-    role = $('#role').val();
+    var c = (eng ? 'eng' : 'ger');
+    var name = $('[name=name].'+c).val(),
+    organization = $('[name=organization].'+c).val(),
+    role = $('[name=role].'+c).val();
     if (!name) {
       showMsg("Please enter your name");
       return;
@@ -47,9 +48,9 @@ function showMsg(m){
   alert(m);
 }
 function clearFields(){
-  $('#name').val('');
-  $('#organization').val('');
-  $('#role').val('');
+  $('[name=name]').val('');
+  $('[name=organization]').val('');
+  $('[name=role]').val('');
 }
 function updateTable(){
   $.ajax({
