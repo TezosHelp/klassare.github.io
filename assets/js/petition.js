@@ -4,7 +4,7 @@ $('document').ready(function(){
   $('#loadMore').click(function(){
     updateTable();
   });
-  $('#sendPetition').click(function(){
+  $('.sendPetition').click(function(){
     var name = $('#name').val(),
     organization = $('#organization').val(),
     role = $('#role').val();
