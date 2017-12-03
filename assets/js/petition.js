@@ -33,8 +33,9 @@ $('document').ready(function(){
             clearFields();
             showMsg("Thank you for completing our petition!");
             total = d.data.total;
-            console.log(d);
-            buildTable(d.data.records);
+            if (rcount == (total -1)){
+              buildTable(d.data.records);                            
+            }
           } else {
             showMsg(d.error);
           }
@@ -76,7 +77,7 @@ function buildTable(d){
   } else {
     $('#loadMore').show();
   }
-  $('#petitionCount').html(numberWithCommas(rcount) + " members");
+  $('#petitionCount').html(numberWithCommas(total) + " members");
   console.log(d);
   for(var i = 0; i < d.length; i++){
     $("#petitionList").append("<tr><td>"+encodeHTML(d[i].name)+"</td><td>"+encodeHTML(d[i].organization)+"</td><td>"+encodeHTML(d[i].role)+"</td></tr>");
