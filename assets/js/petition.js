@@ -82,15 +82,8 @@ function buildTable(d){
 function encodeHTML(s) {
     return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
 }
-function setLanguageGerman(){
-	document.getElementById('englishVersion').style.display = 'none';
-	document.getElementById('germanVersion').style.display = 'block';
-	document.getElementById('changeLanguage').innerHTML = "<a href=\"\" onclick=\"return setLanguageEnglish();\">English version</a>";
-	return false;
-}
-function setLanguageEnglish(){
-	document.getElementById('germanVersion').style.display = 'none';
-	document.getElementById('englishVersion').style.display = 'block';
-	document.getElementById('changeLanguage').innerHTML = "<a href=\"\" onclick=\"return setLanguageGerman();\">German version</a>";
+function swapLanguage(){
+	$('[lang="eng"]').toggle();
+	$('[lang="ger"]').toggle();
 	return false;
 }

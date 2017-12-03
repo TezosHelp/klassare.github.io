@@ -3925,3 +3925,7 @@
 			}
 
 		}
+	/* css for community statement */
+	span:lang(ger), p:lang(ger) {
+		display: none;
+	}
