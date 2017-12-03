@@ -76,6 +76,7 @@ function buildTable(d){
   } else {
     $('#loadMore').show();
   }
+  $('#petitionCount').html(numberWithCommas(rcount) + " members");
   console.log(d);
   for(var i = 0; i < d.length; i++){
     $("#petitionList").append("<tr><td>"+encodeHTML(d[i].name)+"</td><td>"+encodeHTML(d[i].organization)+"</td><td>"+encodeHTML(d[i].role)+"</td></tr>");
@@ -83,6 +84,13 @@ function buildTable(d){
 }
 function encodeHTML(s) {
     return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+}
+function numberWithCommas(x) {
+    x = x.toString();
+    var pattern = /(-?\d+)(\d{3})/;
+    while (pattern.test(x))
+        x = x.replace(pattern, "$1,$2");
+    return x;
 }
 function swapLanguage(){
 	$('[lang="eng"]').toggle();
