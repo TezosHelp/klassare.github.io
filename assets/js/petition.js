@@ -60,7 +60,6 @@ function updateTable(){
     },
     success: function(d){
         if (d.success){
-          console.log(d);
           total = d.data.total;
           buildTable(d.data.records);
         } else {
@@ -78,7 +77,6 @@ function buildTable(d){
     $('#loadMore').show();
   }
   $('#petitionCount').html(numberWithCommas(total) + " members");
-  console.log(d);
   for(var i = 0; i < d.length; i++){
     $("#petitionList").append("<tr><td>"+encodeHTML(d[i].name)+"</td><td>"+encodeHTML(d[i].organization)+"</td><td>"+encodeHTML(d[i].role)+"</td></tr>");
   }
