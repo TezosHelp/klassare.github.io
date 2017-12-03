@@ -73,6 +73,8 @@ function buildTable(d){
   rcount += d.length;
   if (rcount >= total){
     $('#loadMore').hide();
+  } else {
+    $('#loadMore').show();
   }
   console.log(d);
   for(var i = 0; i < d.length; i++){
