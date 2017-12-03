@@ -33,8 +33,9 @@ $('document').ready(function(){
             clearFields();
             showMsg("Thank you for completing our petition!");
             total = d.data.total;
-            console.log(d);
-            buildTable(d.data.records);
+            if (rcount == (total -1)){
+              buildTable(d.data.records);                            
+            }
           } else {
             showMsg(d.error);
           }
@@ -59,7 +60,6 @@ function updateTable(){
     },
     success: function(d){
         if (d.success){
-          console.log(d);
           total = d.data.total;
           buildTable(d.data.records);
         } else {
@@ -73,14 +73,23 @@ function buildTable(d){
   rcount += d.length;
   if (rcount >= total){
     $('#loadMore').hide();
+  } else {
+    $('#loadMore').show();
   }
-  console.log(d);
+  $('#petitionCount').html(numberWithCommas(total) + " members");
   for(var i = 0; i < d.length; i++){
     $("#petitionList").append("<tr><td>"+encodeHTML(d[i].name)+"</td><td>"+encodeHTML(d[i].organization)+"</td><td>"+encodeHTML(d[i].role)+"</td></tr>");
   }
 }
 function encodeHTML(s) {
     return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+}
+function numberWithCommas(x) {
+    x = x.toString();
+    var pattern = /(-?\d+)(\d{3})/;
+    while (pattern.test(x))
+        x = x.replace(pattern, "$1,$2");
+    return x;
 }
 function swapLanguage(){
 	$('[lang="eng"]').toggle();
