@@ -76,7 +76,7 @@ function buildTable(d){
   } else {
     $('#loadMore').show();
   }
-  $('#petitionCount').html(numberWithCommas(total) + " members");
+  $('#petitionCount').html(numberWithCommas(total));
   for(var i = 0; i < d.length; i++){
     $("#petitionList").append("<tr><td>"+encodeHTML(d[i].name)+"</td><td>"+encodeHTML(d[i].organization)+"</td><td>"+encodeHTML(d[i].role)+"</td></tr>");
   }
@@ -91,7 +91,14 @@ function numberWithCommas(x) {
         x = x.replace(pattern, "$1,$2");
     return x;
 }
+var eng = true;
 function swapLanguage(){
+  eng = !eng;
+  if (eng){
+    $('#loadMore').val('Load More');
+  } else {
+    $('#loadMore').val('Mehr laden');
+  }
 	$('[lang="eng"]').toggle();
 	$('[lang="ger"]').toggle();
 	return false;
