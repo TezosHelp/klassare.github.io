@@ -5,7 +5,7 @@ $('document').ready(function(){
     updateTable();
   });
   $('.sendPetition').click(function(){
-    var c = (eng ? 'eng' : 'ger');
+    var c = lang;
     var name = $('[name=name].'+c).val(),
     organization = $('[name=organization].'+c).val(),
     role = $('[name=role].'+c).val();
@@ -92,11 +92,13 @@ function numberWithCommas(x) {
         x = x.replace(pattern, "$1,$2");
     return x;
 }
+var lang = 'eng';
 function setLangEng(){
     $('#loadMore').val('Load More');
 	$('[lang="ger"]').hide();
 	$('[lang="fra"]').hide();
 	$('[lang="eng"]').show();
+  lang = 'eng';
 	return false;
 }
 function setLangGer(){
@@ -104,6 +106,7 @@ function setLangGer(){
 	$('[lang="eng"]').hide();
 	$('[lang="fra"]').hide();
 	$('[lang="ger"]').show();
+  lang = 'ger';
 	return false;
 }
 function setLangFra(){
@@ -111,5 +114,6 @@ function setLangFra(){
 	$('[lang="eng"]').hide();
 	$('[lang="ger"]').hide();
 	$('[lang="fra"]').show();
+  lang = 'fra';
 	return false;
 }
