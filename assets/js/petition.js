@@ -92,24 +92,15 @@ function numberWithCommas(x) {
         x = x.replace(pattern, "$1,$2");
     return x;
 }
-function setLangEng(){
+var eng = true;
+function swapLanguage(){
+  eng = !eng;
+  if (eng){
     $('#loadMore').val('Load More');
-	$('[lang="ger"]').hide();
-	$('[lang="fra"]').hide();
-	$('[lang="eng"]').show();
-	return false;
-}
-function setLangGer(){
+  } else {
     $('#loadMore').val('Mehr laden');
-	$('[lang="eng"]').hide();
-	$('[lang="fra"]').hide();
-	$('[lang="ger"]').show();
-	return false;
-}
-function setLangFra(){
-    $('#loadMore').val('Charger plus');
-	$('[lang="eng"]').hide();
-	$('[lang="ger"]').hide();
-	$('[lang="fra"]').show();
+  }
+	$('[lang="eng"]').toggle();
+	$('[lang="ger"]').toggle();
 	return false;
 }
