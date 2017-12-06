@@ -97,23 +97,35 @@ function setLangEng(){
     $('#loadMore').val('Load More');
 	$('[lang="ger"]').hide();
 	$('[lang="fra"]').hide();
+	$('[lang="rus"]').hide();
 	$('[lang="eng"]').show();
-  lang = 'eng';
+	lang = 'eng';
 	return false;
 }
 function setLangGer(){
     $('#loadMore').val('Mehr laden');
 	$('[lang="eng"]').hide();
 	$('[lang="fra"]').hide();
+	$('[lang="rus"]').hide();
 	$('[lang="ger"]').show();
-  lang = 'ger';
+	lang = 'ger';
 	return false;
 }
 function setLangFra(){
     $('#loadMore').val('Charger plus');
 	$('[lang="eng"]').hide();
 	$('[lang="ger"]').hide();
+	$('[lang="rus"]').hide();
 	$('[lang="fra"]').show();
-  lang = 'fra';
+	lang = 'fra';
+	return false;
+}
+function setLangRus(){
+    $('#loadMore').val('ЗАГРУЗИТЬ ЕЩЁ');
+	$('[lang="eng"]').hide();
+	$('[lang="ger"]').hide();
+	$('[lang="fra"]').hide();
+	$('[lang="rus"]').show();
+	lang = 'rus';
 	return false;
 }

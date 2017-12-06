@@ -3932,3 +3932,6 @@
 	span:lang(fra), p:lang(fra), input:lang(fra), ol:lang(fra) {
 		display: none;
 	}
+	span:lang(rus), p:lang(rus), input:lang(rus), ol:lang(rus) {
+		display: none;
+	}
