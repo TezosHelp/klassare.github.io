@@ -1,0 +1,17 @@
+	ul li{
+		display: inline;
+	}
+	img{
+		display: block;
+		float: right;
+	}
+	/* css for community statement */
+	span:lang(ger), p:lang(ger), input:lang(ger), ol:lang(ger) {
+		display: none;
+	}
+	span:lang(fra), p:lang(fra), input:lang(fra), ol:lang(fra) {
+		display: none;
+	}
+	span:lang(rus), p:lang(rus), input:lang(rus), ol:lang(rus) {
+		display: none;
+	}
