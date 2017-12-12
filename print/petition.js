@@ -63,6 +63,8 @@ function updateTable(){
         if (d.success){
           total = d.data.total;
           buildTable(d.data.records);
+		  if (rcount != total)
+			updateTable();
         } else {
           showMsg(d.error);
         }
