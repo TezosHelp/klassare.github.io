@@ -5,6 +5,12 @@
 		display: block;
 		float: right;
 	}
+	table, th, td{
+		border: 1px solid black;
+	}
+	a{
+		color: black;
+	}
 	/* css for community statement */
 	span:lang(ger), p:lang(ger), input:lang(ger), ol:lang(ger) {
 		display: none;
