@@ -94,6 +94,8 @@ function numberWithCommas(x) {
 }
 var lang = 'eng';
 function setLangEng(){
+	$('[class="active_lang"]').removeClass("active_lang");
+	$('#navEng').addClass("active_lang");
     $('#loadMore').val('Load More');
 	$('[lang="ger"]').hide();
 	$('[lang="fra"]').hide();
@@ -103,6 +105,8 @@ function setLangEng(){
 	return false;
 }
 function setLangGer(){
+	$('[class="active_lang"]').removeClass("active_lang");
+	$('#navGer').addClass("active_lang");
     $('#loadMore').val('Mehr laden');
 	$('[lang="eng"]').hide();
 	$('[lang="fra"]').hide();
@@ -112,6 +116,8 @@ function setLangGer(){
 	return false;
 }
 function setLangFra(){
+	$('[class="active_lang"]').removeClass("active_lang");
+	$('#navFra').addClass("active_lang");
     $('#loadMore').val('Charger plus');
 	$('[lang="eng"]').hide();
 	$('[lang="ger"]').hide();
@@ -121,6 +127,8 @@ function setLangFra(){
 	return false;
 }
 function setLangRus(){
+	$('[class="active_lang"]').removeClass("active_lang");
+	$('#navRus').addClass("active_lang");
     $('#loadMore').val('ЗАГРУЗИТЬ ЕЩЁ');
 	$('[lang="eng"]').hide();
 	$('[lang="ger"]').hide();
