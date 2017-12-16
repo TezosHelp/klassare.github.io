@@ -3447,8 +3447,8 @@
 						}
 						.dropdown > .dropdown-menu { 
 							background-color: #5e42a6; 
-							right: -40px;
 							left: auto;
+							right: -35%;
 						}
 
 						/*
