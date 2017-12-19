@@ -3940,9 +3940,9 @@
 	span:lang(ger), p:lang(ger), input:lang(ger), ol:lang(ger), ul:lang(ger) {
 		display: none;
 	}
-	span:lang(fra), p:lang(fra), input:lang(fra), ol:lang(fra), ul:lang(ger) {
+	span:lang(fra), p:lang(fra), input:lang(fra), ol:lang(fra), ul:lang(fra) {
 		display: none;
 	}
-	span:lang(rus), p:lang(rus), input:lang(rus), ol:lang(rus), ul:lang(ger) {
+	span:lang(rus), p:lang(rus), input:lang(rus), ol:lang(rus), ul:lang(rus) {
 		display: none;
 	}
