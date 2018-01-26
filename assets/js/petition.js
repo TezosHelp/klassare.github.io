@@ -1,47 +1,13 @@
 var rcount = 0, total = 0;
 $('document').ready(function(){
-  updateTable();
+  //updateTable();
+  $('#loadMore').show();
   $('#loadMore').click(function(){
-    updateTable();
+    showMsg("Server currently not available due to database maintenance. Please come back later.");
   });
   $('.sendPetition').click(function(){
-    var c = lang;
-    var name = $('[name=name].'+c).val(),
-    organization = $('[name=organization].'+c).val(),
-    role = $('[name=role].'+c).val();
-    if (!name) {
-      showMsg("Please enter your name");
-      return;
-    }
-    if (!role) {
-      showMsg("Please enter your name");
-      return;
-    }
-    if (name.length > 128 || organization.length > 128 || role.length > 128) {
-      showMsg("Please ensure all fields are less than 128 characters long");
-      return;
-    }
-    $.ajax({
-      type: "POST",
-      url: "https://tezrpc.me/api/extended/petitionAdd",
-      data: {
-        name : name,
-        organization : organization,
-        role : role,
-      },
-      success: function(d){
-          if (d.success){
-            clearFields();
-            showMsg("Thank you for completing our petition!");
-            total = d.data.total;
-            if (rcount == (total -1)){
-              buildTable(d.data.records);                            
-            }
-          } else {
-            showMsg(d.error);
-          }
-      }
-    });
+	showMsg("Server currently not available due to database maintenance. Please come back later.");
+    clearFields();
   });
 });
 function showMsg(m){
