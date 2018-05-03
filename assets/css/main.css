@@ -1831,7 +1831,6 @@
 			padding: 1em 1.5em;
 			overflow-x: auto;
 		}
-
 	hr {
 		border: 0;
 		border-bottom: solid 1px rgba(255, 255, 255, 0.15);
@@ -3912,6 +3911,7 @@
 		#intro p {
 			font-size: 1.25em;
 		}
+		
 
 			@media screen and (max-width: 980px) {
 
@@ -3926,6 +3926,9 @@
 				#intro p {
 					font-size: 1em;
 				}
+				#intro p.introMsg {
+					font-size: 0.6em;
+				}
 
 			}
 
@@ -3936,6 +3939,18 @@
 			}
 
 		}
+		#intro p.introMsg {
+		-webkit-overflow-scrolling: touch;
+		font-size: 0.8em;
+		margin: 0 0 2em 0;
+		display: block;
+		line-height: 1.75em;
+		padding: 1em 1.5em;
+		overflow-x: auto;
+		background: rgba(255, 255, 255, 0.05);
+		border-radius: 0.25em;
+		border: solid 1px rgba(255, 255, 255, 0.15);
+	}
 	/* css for community statement */
 	span:lang(ger), p:lang(ger), input:lang(ger), ol:lang(ger), ul:lang(ger) {
 		display: none;
