@@ -3942,7 +3942,7 @@
 		#intro p.introMsg {
 		-webkit-overflow-scrolling: touch;
 		font-size: 0.8em;
-		margin: 0 0 2em 0;
+		margin: 0 0 0.2em 0;
 		display: block;
 		line-height: 1.75em;
 		padding: 1em 1.5em;
