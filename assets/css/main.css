@@ -3951,6 +3951,10 @@
 		border-radius: 0.25em;
 		border: solid 1px rgba(255, 255, 255, 0.15);
 	}
+	#intro h1 {
+		margin: 0 0 0 0;
+	}
+	}
 	/* css for community statement */
 	span:lang(ger), p:lang(ger), input:lang(ger), ol:lang(ger), ul:lang(ger) {
 		display: none;
