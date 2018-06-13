@@ -1,6 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
+			<link rel="stylesheet" href="assets/css/flipclock.css">
 	<!-- Global Site Tag (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-106698684-2"></script>
 	<script>
@@ -20,8 +21,9 @@
 		<link rel="shortcut icon" type="image/png" href="images/favicon3.png"/>
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+		<script src="assets/js/flipclock.js"></script>	
 		<script src="assets/js/views.js"></script>
-		<script src="assets/js/jquery.min.js"></script>
 		<script src="assets/js/jquery.scrollex.min.js"></script>
 		<script src="assets/js/jquery.scrolly.min.js"></script>
 		<script src="assets/js/skel.min.js"></script>
@@ -29,7 +31,26 @@
 		<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 		<script src="assets/js/main.js"></script>
 		<script type="text/view" id="contactview"></script>
-		<script>
+											<script type="text/javascript">
+			var clock;
+
+			$(document).ready(function() {
+
+				// Grab the current date
+				var currentDate = new Date();
+
+				// Set some date in the future. In this case, it's always Jan 1
+				var futureDate  = new Date("2018-06-29T22:00:00Z");
+
+				// Calculate the difference in seconds between the future and current date
+				var diff = futureDate.getTime() / 1000 - currentDate.getTime() / 1000;
+
+				// Instantiate a coutdown FlipClock
+				clock = $('.clock').FlipClock(diff, {
+					clockFace: 'DailyCounter',
+					countdown: true
+				});
+			});
 		</script>
 	</head>
 	<body>
@@ -60,6 +81,7 @@
 						<div class="inner">
 							<h1>Tezos.help</h1>
 							<p>We help you navigate the world of Tezos</p>
+							<div class="clock" style="margin:2em;"></div>
 							<p class="introMsg">2018-05-31 | <a href="https://xtez.io/" target="_blank">xtez.io</a> added as a new delegation service.</p>
 							<p class="introMsg">2018-05-29 | Make sure to <a href="https://check.tezos.com/" target="_blank">check</a> your contribution in preparation for the <a href="https://tezos.com/betanet/" target="_blank">Betanet</a>.</p>
 							<p class="introMsg">2018-05-03 | We are now preparing for the <a href="http://tezosfoundation.ch/news/preparing-launch-tezos-network/" target="_blank">betanet launch</a> this quarter. Expect some changes to the website in the coming weeks.</p>
