@@ -3,7 +3,7 @@ https://www.tezosprojects.com/
 https://tezos.stackexchange.com/
 https://tezosinsider.com/
 https://play.google.com/store/apps/details?id=com.tezcore.cortez
-http://www.wetez.io/
+https://www.wetez.io/
 https://tqgroup.io/
 https://learn.tqgroup.io/
 https://tezoscapstone.com/
