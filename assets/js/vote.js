@@ -15,7 +15,6 @@ function updateVotes(){
 		 $('#b1').html(d[0][0]);
 		 $('#b2').html(d[0][1]);
 		 $('#c2').html(totalVotes - d[0][1] - d[1][1])
-		 $('#d2').html(totalVotes)
     }
   });
 }
