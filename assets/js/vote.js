@@ -34,19 +34,25 @@ function getAthensA(bakers){
 		type: "GET",
 		url: "https://api6.tzscan.io/v1/proposal_votes/Pt24m4xiPbLDhVgVfABUjirbmda3yohdN82Sp9FeuAXJ4eV9otd?p=0&number=100",
 		success: function(d){
+			var prev = '';
 			for(var i = 0; i < d.length; i++){
 				var name;
-				if(d[i].source.alias){
-					name = d[i].source.alias;
-				} else {
-					name = d[i].source.tz;
-					for(var j = 0; j < bakers.length; j++){
-						if(bakers[j].delegation_code == name){
-							name = bakers[j].baker_name;
+				if (prev !== d[i].source.tz) {
+					prev = d[i].source.tz;
+					if(d[i].source.alias){
+						name = d[i].source.alias;
+					} else {
+						name = d[i].source.tz;
+						for(var j = 0; j < bakers.length; j++){
+							if(bakers[j].delegation_code == name){
+								name = bakers[j].baker_name;
+							}
 						}
 					}
+					$("#AthensA").append("<tr><td>"+name+"</td><td>"+d[i].votes+"</td></tr>");
+				} else {
+					showMsg('dup');
 				}
-				$("#AthensA").append("<tr><td>"+name+"</td><td>"+d[i].votes+"</td></tr>");
 			}
 		}
   });
@@ -56,9 +62,12 @@ function getAthensB(bakers){
 	type: "GET",
 	url: "https://api6.tzscan.io/v1/proposal_votes/Psd1ynUBhMZAeajwcZJAeq5NrxorM6UCU4GJqxZ7Bx2e9vUWB6z?p=0&number=100",
 	success: function(d){
+		var prev = '';
 		for(var i = 0; i < d.length; i++){
 			var name;
-				if(d[i].source.alias){
+				if (prev !== d[i].source.tz) {
+					prev = d[i].source.tz;
+					if(d[i].source.alias){
 					name = d[i].source.alias;
 				} else {
 					name = d[i].source.tz;
@@ -69,6 +78,9 @@ function getAthensB(bakers){
 					}
 				}
 			$("#AthensB").append("<tr><td>"+name+"</td><td>"+d[i].votes+"</td></tr>");
+				} else {
+					showMsg('dup');
+				}
 		}
 	}
   });
