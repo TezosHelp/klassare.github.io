@@ -13,6 +13,9 @@ function updateVotes(){
     success: function(d){
 		 $('#a2').html(d[1][1]);
 		 $('#b2').html(d[0][1]);
+		 $('#a3').html(Math.round(10000*d[1][1]/(d[1][1]+d[0][1]))/100+'%');
+		 $('#b3').html(Math.round(10000*d[0][1]/(d[1][1]+d[0][1]))/100+'%');
+		 
 		 $('#c2').html(totalVotes - d[0][1] - d[1][1])
     }
   });
