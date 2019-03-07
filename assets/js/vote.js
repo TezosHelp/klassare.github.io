@@ -25,6 +25,7 @@ function getBakerVotes(){
 	type: "GET",
 	url: "https://api.mytezosbaker.com/v1/bakers/",
 	success: function(d){
+		d.bakers.push({delegation_code: "tz1Yju7jmmsaUiG9qQLoYv35v5pHgnWoLWbt", baker_name: "Polychain Capital"});
 		getAthensA(d.bakers);
 		getAthensB(d.bakers);
 	}});
@@ -50,8 +51,6 @@ function getAthensA(bakers){
 						}
 					}
 					$("#AthensA").append("<tr><td>"+name+"</td><td>"+d[i].votes+"</td></tr>");
-				} else {
-					showMsg('dup');
 				}
 			}
 		}
@@ -78,8 +77,6 @@ function getAthensB(bakers){
 					}
 				}
 			$("#AthensB").append("<tr><td>"+name+"</td><td>"+d[i].votes+"</td></tr>");
-				} else {
-					showMsg('dup');
 				}
 		}
 	}
