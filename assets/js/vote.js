@@ -26,6 +26,7 @@ function getBakerVotes(){
 	url: "https://api.mytezosbaker.com/v1/bakers/",
 	success: function(d){
 		d.bakers.push({delegation_code: "tz1Yju7jmmsaUiG9qQLoYv35v5pHgnWoLWbt", baker_name: "Polychain Capital"});
+		d.bakers.push({delegation_code: "tz1NpWrAyDL9k2Lmnyxcgr9xuJakbBxdq7FB", baker_name: "gate.io"});
 		getAthensA(d.bakers);
 		getAthensB(d.bakers);
 	}});
