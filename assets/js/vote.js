@@ -1,4 +1,5 @@
 $('document').ready(function(){
+	getPeriodInfo();
 	updateVotes();
 	getBakerVotes();
 });
@@ -6,18 +7,26 @@ function showMsg(m){
   alert(m);
 }
 function updateVotes(){
-	var totalVotes = 51604;
   $.ajax({
     type: "GET",
     url: "https://rpc.tezrpc.me/chains/main/blocks/head/votes/proposals",
     success: function(d){
-		 $('#a2').html(d[1][1]);
-		 $('#b2').html(d[0][1]);
+		 $('#a2').html(d[1][1].toLocaleString());
+		 $('#b2').html(d[0][1].toLocaleString());
 		 $('#a3').html(Math.round(10000*d[1][1]/(d[1][1]+d[0][1]))/100+'%');
 		 $('#b3').html(Math.round(10000*d[0][1]/(d[1][1]+d[0][1]))/100+'%');
-		 
-		 $('#c2').html(totalVotes - d[0][1] - d[1][1])
     }
+  });
+}
+function updateUnusedVotes(period){
+  $.ajax({
+    type: "GET",
+    url: "https://api6.tzscan.io/v3/total_proposal_votes/" + period,
+    success: function(d){
+		// showMsg(JSON.stringify(d));
+		$('#c2').html(d.unused_votes.toLocaleString());
+		$('#c3').html(Math.round((10000 * d.unused_votes) / d.total_votes)/100 + '%');
+	}
   });
 }
 function getBakerVotes(){
@@ -30,6 +39,28 @@ function getBakerVotes(){
 		getAthensA(d.bakers);
 		getAthensB(d.bakers);
 	}});
+}
+function getPeriodInfo(){
+	$.ajax({
+		type: "GET",
+		url: "https://api6.tzscan.io/v3/voting_period_info",
+		success: function(d){
+			// showMsg(JSON.stringify(d));
+			setCountDown((d.period + 1) * 32768 - d.level);
+			updateUnusedVotes(d.period);
+			
+	}});
+}
+function setCountDown(blocks){
+	var minutes = blocks % 60;
+	var hours = (blocks - minutes) / 60;
+	var days = (hours - hours % 60) / 24;
+	hours = hours % 60;
+	if (days === 0) {
+		$("#countDown").html(hours + " hours " + minutes + "minutes");
+	} else {
+		$("#countDown").html(days + " days " + hours + " hours");
+	}
 }
 function getAthensA(bakers){
 	$.ajax({
@@ -51,7 +82,7 @@ function getAthensA(bakers){
 							}
 						}
 					}
-					$("#AthensA").append("<tr><td>"+name+"</td><td>"+d[i].votes+"</td></tr>");
+					$("#AthensA").append("<tr><td>"+name+"</td><td>"+d[i].votes.toLocaleString()+"</td></tr>");
 				}
 			}
 		}
@@ -77,7 +108,7 @@ function getAthensB(bakers){
 						}
 					}
 				}
-			$("#AthensB").append("<tr><td>"+name+"</td><td>"+d[i].votes+"</td></tr>");
+			$("#AthensB").append("<tr><td>"+name+"</td><td>"+d[i].votes.toLocaleString()+"</td></tr>");
 				}
 		}
 	}

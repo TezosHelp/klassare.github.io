@@ -18,7 +18,10 @@
 				<a href="/" class="title">Tezos.help</a>
 				<nav>
 					<ul>
-						<li><a href="" onclick="return false;" class="active">Voting stats</a></li>
+						<li><a href="" onclick="return false;" class="active">Proposal vote</a></li>
+						<li><a href="" onclick="return false;">Testing vote</a></li>
+						<li><a href="" onclick="return false;">Testing</a></li>
+						<li><a href="" onclick="return false;">Promotion vote</a></li>
 					</ul>
 				</nav>
 			</header>
@@ -27,13 +30,17 @@
 			<!-- Main -->
 				<section id="main" class="wrapper">
 					<div class="inner">
-						<h1 class="major">Proposals</h1>
+						<div class="row">
+							<h1 class="major 9u">Proposal vote</h1>
+							<p class="right center bold 3u"><BR><BR>
+							<img src="../images/time-left.png"> <b id="countDown"></b></p>
+						</div>
 						<div class="table-wrapper">
 							<table class="alt">
 								<thead>
 									<tr>
 										<th>Proposal</th>
-										<th>Increase gas limit</th>
+										<th>Gas limit</th>
 										<th>Roll size</th>
 										<th>Votes</th>
 										<th>Percentage</th>
@@ -42,30 +49,26 @@
 								<tbody>
 									<tr>
 										<td id="a1">Athens A - Pt24m4xiPbLDhVgVfABUjirbmda3yohdN82Sp9FeuAXJ4eV9otd</td>
-										<td>Yes</td>
+										<td>Increase</td>
 										<td>8 000</td>
 										<td id="a2"></td>
 										<td id="a3"></td>
 									</tr>
 									<tr>
 										<td id="b1">Athens B - Psd1ynUBhMZAeajwcZJAeq5NrxorM6UCU4GJqxZ7Bx2e9vUWB6z</td>
-										<td>Yes</td>
+										<td>Increase</td>
 										<td>10 000</td>
 										<td id="b2"></td>
 										<td id="b3"></td>
 									</tr>
-									<tr>
-										<td>TBD</td>
-										<td>-</td>
-										<td>-</td>
-										<td id="c2"></td>
-										<td>-</td>
-									</tr>
 								</tbody>
 								<tfoot>
 									<tr>
-										<td colspan="3"></td>
-										<td>51604</td>
+										<td>Undecided</td>
+										<td></td>
+										<td></td>
+										<td id="c2"></td>
+										<td id="c3"></td>
 									</tr>
 								</tfoot>
 							</table>
@@ -103,6 +106,7 @@
 				<div class="inner">
 					<ul class="menu">
 						<li>&copy Tezos.help, All rights reserved</li><li>Not officially associated with the Tezos Foundation.</li><li><a href="mailto:info@tezos.help" target="_blank">Contact</a></li>
+						<li>This page is powered by TzScan & MyTezosBaker
 					</ul>
 				</div>
 			</footer>
