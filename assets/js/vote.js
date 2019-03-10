@@ -54,8 +54,8 @@ function getPeriodInfo(){
 function setCountDown(blocks){
 	var minutes = blocks % 60;
 	var hours = (blocks - minutes) / 60;
-	var days = (hours - hours % 60) / 24;
-	hours = hours % 60;
+	var days = (hours - hours % 24) / 24;
+	hours = hours % 24;
 	if (days === 0) {
 		$("#countDown").html(hours + " hours " + minutes + "minutes");
 	} else {
