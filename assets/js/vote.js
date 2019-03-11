@@ -38,6 +38,7 @@ function getBakerVotes(){
 		d.bakers.push({delegation_code: "tz1NpWrAyDL9k2Lmnyxcgr9xuJakbBxdq7FB", baker_name: "gate.io"});
 		getAthensA(d.bakers);
 		getAthensB(d.bakers);
+		latestVote(d.bakers);
 	}});
 }
 function getPeriodInfo(){
@@ -48,6 +49,31 @@ function getPeriodInfo(){
 			// showMsg(JSON.stringify(d));
 			setCountDown((d.period + 1) * 32768 - d.level);
 			updateUnusedVotes(d.period);
+			
+	}});
+}
+function latestVote(bakers){
+		$.ajax({
+		type: "GET",
+		url: "https://api6.tzscan.io/v3/operations?type=Proposal&p=0&number=5",
+		success: function(d){
+			for(var i = 0; i < d.length; i++){
+				var name;
+				if(d[i].type.source.alias){
+					name = d[i].type.source.alias;
+				} else {
+					name = d[i].type.source.tz;
+					for(var j = 0; j < bakers.length; j++){
+						if(bakers[j].delegation_code == name){
+							name = bakers[j].baker_name;
+						}
+					}
+				}
+				var proposal = d[i].type.proposals.toString();
+				proposal = proposal.replace("Pt24m4xiPbLDhVgVfABUjirbmda3yohdN82Sp9FeuAXJ4eV9otd", "Athens A");
+				proposal = proposal.replace("Psd1ynUBhMZAeajwcZJAeq5NrxorM6UCU4GJqxZ7Bx2e9vUWB6z", "Athens B");
+				$("#RecentVotes").append("<tr><td>"+name+"</td><td>"+proposal+"</td></tr>");
+			}
 			
 	}});
 }
