@@ -91,7 +91,7 @@ function setCountDown(blocks){
 function getAthensA(bakers){
 	$.ajax({
 		type: "GET",
-		url: "https://api6.tzscan.io/v1/proposal_votes/Pt24m4xiPbLDhVgVfABUjirbmda3yohdN82Sp9FeuAXJ4eV9otd?p=0&number=100",
+		url: "https://api6.tzscan.io/v1/proposal_votes/Pt24m4xiPbLDhVgVfABUjirbmda3yohdN82Sp9FeuAXJ4eV9otd?p=0&number=50",
 		success: function(d){
 			var prev = '';
 			for(var i = 0; i < d.length; i++){
