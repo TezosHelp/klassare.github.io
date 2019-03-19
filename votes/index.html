@@ -26,10 +26,10 @@
 				<a href="/" class="title">Tezos.help</a>
 				<nav>
 					<ul>
-						<li><a href="" onclick="return false;" class="active">Proposal vote</a></li>
-						<li><a href="" onclick="return false;">Testing vote</a></li>
-						<li><a href="" onclick="return false;">Testing</a></li>
-						<li><a href="" onclick="return false;">Promotion vote</a></li>
+						<li><a id="h1" href="" onclick="return false;">Proposal vote</a></li>
+						<li><a id="h2" href="" onclick="return false;">Testing vote</a></li>
+						<li><a id="h3" href="" onclick="return false;">Testing</a></li>
+						<li><a id="h4" href="" onclick="return false;">Promotion vote</a></li>
 					</ul>
 				</nav>
 			</header>
@@ -39,11 +39,12 @@
 				<section id="main" class="wrapper">
 					<div class="inner">
 						<div class="row">
-							<h1 class="major 9u">Proposal vote</h1>
+							<h1 id="title" class="major 9u"></h1>
 							<p class="right center bold 3u"><BR><BR>
 							<img src="../images/time-left.png"> <b id="countDown"></b></p>
 						</div>
-						<div class="table-wrapper">
+						<!-- Proposal vote -->
+						<div id="p1" class="table-wrapper" style="display: none;">
 							<table class="alt">
 								<thead>
 									<tr>
@@ -56,18 +57,18 @@
 								</thead>
 								<tbody>
 									<tr>
-										<td id="a1">Athens A - Pt24m4xiPbLDhVgVfABUjirbmda3yohdN82Sp9FeuAXJ4eV9otd</td>
+										<td class="a1">Athens A - Pt24m4xiPbLDhVgVfABUjirbmda3yohdN82Sp9FeuAXJ4eV9otd</td>
 										<td>Increase</td>
 										<td>8 000</td>
-										<td id="a2"></td>
-										<td id="a3"></td>
+										<td class="a2"></td>
+										<td class="a3"></td>
 									</tr>
 									<tr>
-										<td id="b1">Athens B - Psd1ynUBhMZAeajwcZJAeq5NrxorM6UCU4GJqxZ7Bx2e9vUWB6z</td>
+										<td class="b1">Athens B - Psd1ynUBhMZAeajwcZJAeq5NrxorM6UCU4GJqxZ7Bx2e9vUWB6z</td>
 										<td>Increase</td>
 										<td>10 000</td>
-										<td id="b2"></td>
-										<td id="b3"></td>
+										<td class="b2"></td>
+										<td class="b3"></td>
 									</tr>
 								</tbody>
 								<tfoot>
@@ -75,8 +76,8 @@
 										<td>Undecided</td>
 										<td></td>
 										<td></td>
-										<td id="c2"></td>
-										<td id="c3"></td>
+										<td class="c2"></td>
+										<td class="c3"></td>
 									</tr>
 								</tfoot>
 							</table>
@@ -95,33 +96,89 @@
 							</div>
 							<!-- Athens A -->
 							<div class="row">
-							<table class="alt 6u">
-								<thead>
-									<tr>
-										<th>Votes Athens A</th>
-										<th>#</th>
-									</tr>
-								</thead>
-								<tbody id="AthensA">
-								</tbody>
-							</table>
-							<!-- Athens B -->
-							<table class="alt 6u">
-								<thead>
-									<tr>
-										<th>Votes Athens B</th>
-										<th>#</th>
-									</tr>
-								</thead>
-								<tbody id="AthensB">
-								</tbody>
-							</table>
+								<table class="alt 6u">
+									<thead>
+										<tr>
+											<th>Votes Athens A</th>
+											<th>#</th>
+										</tr>
+									</thead>
+									<tbody id="AthensA">
+									</tbody>
+								</table>
+								<!-- Athens B -->
+								<table class="alt 6u">
+									<thead>
+										<tr>
+											<th>Votes Athens B</th>
+											<th>#</th>
+										</tr>
+									</thead>
+									<tbody id="AthensB">
+									</tbody>
+								</table>
 							</div>
+						</div></div>
+						<!-- Testing vote -->
+						<div id="p2" class="row 12u" style="display: none;">
+							<table class="alt 6u">
+								<thead>
+									<tr>
+										<th>Ballot</th>
+										<th>Votes</th>
+										<th>Percentage</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td id="a1">Yea</td>
+										<td id="a2"></td>
+										<td id="a3"></td>
+									</tr>
+									<tr>
+										<td id="b1">Nay</td>
+										<td id="b2"></td>
+										<td id="b3"></td>
+									</tr>
+									<tr>
+										<td id="c1">Pass</td>
+										<td id="c2"></td>
+										<td id="c3"></td>
+									</tr>
+								</tbody>
+							</table>
+							<table class="alt 6u">
+								<thead>
+									<tr>
+										<th>Participation</th>
+										<th>Votes</th>
+										<th>Percentage</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td id="d1">Voted</td>
+										<td id="d2"></td>
+										<td id="d3"></td>
+									</tr>
+									<tr>
+										<td id="e1">Not voted</td>
+										<td id="e2"></td>
+										<td id="e3"></td>
+									</tr>
+								</tbody>
+								<tfoot>
+									<tr>
+										<td>Quorum</td>
+										<td class="f2"></td>
+										<td class="f3">80%</td>
+									</tr>
+								</tfoot>
+							</table>
 						</div>
-					</div>
 				</section>
 			</div>
-			
+				
 					<!-- Footer -->
 			<footer id="footer" class="wrapper alt">
 				<div class="inner">

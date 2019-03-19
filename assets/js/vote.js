@@ -1,20 +1,63 @@
 $('document').ready(function(){
 	getPeriodInfo();
-	updateVotes();
-	getBakerVotes();
 });
 function showMsg(m){
   alert(m);
+}
+function getPeriodInfo(){
+	$.ajax({
+		type: "GET",
+		url: "https://api6.tzscan.io/v3/voting_period_info",
+		success: function(d){
+			// showMsg(JSON.stringify(d));
+			var kind = d.kind;
+			if (kind == "proposal") {
+				$("#h1").addClass("active");
+				$("#title").text("Proposal vote");
+				$("#p1").css("display", "inline-block");
+				setCountDown((d.period + 1) * 32768 - d.level);
+				
+				updateUnusedVotes(d.period);
+				updateVotes();
+				getBakerVotes();
+			} else if (kind == "testing_vote") {
+				$("#h2").addClass("active");
+				$("#title").text("Testing vote (WIP)");
+				$("#p2").css("display", "inline-block");
+				setCountDown((d.period + 2) * 32768 - d.level);
+				
+				ballot(d.period);
+			}
+			
+	}});
+}
+function ballot(period) {
+	 $.ajax({
+    type: "GET",
+    url: "https://api6.tzscan.io/v3/ballots/" + period,
+    success: function(d){
+		// showMsg(JSON.stringify(d));
+		 $('#p2 .a2').html(d.vote_yay.toLocaleString());
+		 $('#p2 .b2').html(d.vote_nay.toLocaleString());
+		 $('#p2 .c2').html(d.vote_pass.toLocaleString());
+		 var total = d.vote_yay + d.vote_nay + d.vote_pass;
+		 $('#p2 .d2').html(total.toLocaleString());
+		 $('#p2 .a3').html(Math.round(10000*d.vote_yay/total)/100+'%');
+		 $('#p2 .b3').html(Math.round(10000*d.vote_nay/total)/100+'%');
+		 $('#p2 .c3').html(Math.round(10000*d.vote_pass/total)/100+'%');
+		 
+    }
+  });
 }
 function updateVotes(){
   $.ajax({
     type: "GET",
     url: "https://rpc.tezrpc.me/chains/main/blocks/head/votes/proposals",
     success: function(d){
-		 $('#a2').html(d[1][1].toLocaleString());
-		 $('#b2').html(d[0][1].toLocaleString());
-		 $('#a3').html(Math.round(10000*d[1][1]/(d[1][1]+d[0][1]))/100+'%');
-		 $('#b3').html(Math.round(10000*d[0][1]/(d[1][1]+d[0][1]))/100+'%');
+		 $('#p1 .a2').html(d[1][1].toLocaleString());
+		 $('#p1 .b2').html(d[0][1].toLocaleString());
+		 $('#p1 .a3').html(Math.round(10000*d[1][1]/(d[1][1]+d[0][1]))/100+'%');
+		 $('#p1 .b3').html(Math.round(10000*d[0][1]/(d[1][1]+d[0][1]))/100+'%');
     }
   });
 }
@@ -24,8 +67,8 @@ function updateUnusedVotes(period){
     url: "https://api6.tzscan.io/v3/total_proposal_votes/" + period,
     success: function(d){
 		// showMsg(JSON.stringify(d));
-		$('#c2').html(d.unused_votes.toLocaleString());
-		$('#c3').html(Math.round((10000 * d.unused_votes) / d.total_votes)/100 + '%');
+		$('#p1 .c2').html(d.unused_votes.toLocaleString());
+		$('#p1 .c3').html(Math.round((10000 * d.unused_votes) / d.total_votes)/100 + '%');
 	}
   });
 }
@@ -39,17 +82,6 @@ function getBakerVotes(){
 		getAthensA(d.bakers);
 		getAthensB(d.bakers);
 		latestVote(d.bakers);
-	}});
-}
-function getPeriodInfo(){
-	$.ajax({
-		type: "GET",
-		url: "https://api6.tzscan.io/v3/voting_period_info",
-		success: function(d){
-			// showMsg(JSON.stringify(d));
-			setCountDown((d.period + 1) * 32768 - d.level);
-			updateUnusedVotes(d.period);
-			
 	}});
 }
 function latestVote(bakers){
