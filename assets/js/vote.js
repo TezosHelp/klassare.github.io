@@ -19,14 +19,14 @@ function getPeriodInfo(){
 				
 				updateUnusedVotes(d.period);
 				updateVotes();
-				getBakerVotes();
+				getBakerVotes(kind);
 			} else if (kind == "testing_vote") {
 				$("#h2").addClass("active");
 				$("#title").text("Testing vote");
 				$("#p2").css("display", "inline-block");
 				setCountDown((d.period + 1) * 32768 - d.level);
-				
 				ballot(d.period, kind);
+				getBakerVotes(kind);
 			}
 			
 	}});
@@ -86,42 +86,69 @@ function updateUnusedVotes(period){
 	}
   });
 }
-function getBakerVotes(){
+function getBakerVotes(kind){
 	$.ajax({
 	type: "GET",
 	url: "https://api.mytezosbaker.com/v1/bakers/",
 	success: function(d){
 		d.bakers.push({delegation_code: "tz1Yju7jmmsaUiG9qQLoYv35v5pHgnWoLWbt", baker_name: "Polychain Capital"});
 		d.bakers.push({delegation_code: "tz1NpWrAyDL9k2Lmnyxcgr9xuJakbBxdq7FB", baker_name: "gate.io"});
-		getAthensA(d.bakers);
-		getAthensB(d.bakers);
-		latestVote(d.bakers);
+		if (kind === "proposal") {
+			getAthensA(d.bakers);
+			getAthensB(d.bakers);
+			latestVote(d.bakers);
+		} else if (kind === "testing_vote") {
+			latestTestingVotes(d.bakers);
+		}
+	}});
+}
+function latestTestingVotes(bakers) {
+	$.ajax({
+	type: "GET",
+	url: "https://api6.tzscan.io/v3/operations?type=Ballot&p=0&number=5",
+	success: function(d){
+		for(var i = 0; i < d.length; i++){
+			var name;
+			if(d[i].type.source.alias){
+				name = d[i].type.source.alias;
+			} else {
+				name = d[i].type.source.tz;
+				for(var j = 0; j < bakers.length; j++){
+					if(bakers[j].delegation_code == name){
+						name = bakers[j].baker_name;
+					}
+				}
+			}
+			var proposal = d[i].type.ballot.toString();
+			$("#p2 .RecentVotes").append("<tr><td>"+name+"</td><td>"+proposal+"</td></tr>");
+		}
+		
 	}});
 }
 function latestVote(bakers){
-		$.ajax({
-		type: "GET",
-		url: "https://api6.tzscan.io/v3/operations?type=Proposal&p=0&number=5",
-		success: function(d){
-			for(var i = 0; i < d.length; i++){
-				var name;
-				if(d[i].type.source.alias){
-					name = d[i].type.source.alias;
-				} else {
-					name = d[i].type.source.tz;
-					for(var j = 0; j < bakers.length; j++){
-						if(bakers[j].delegation_code == name){
-							name = bakers[j].baker_name;
-						}
+	$.ajax({
+	type: "GET",
+	url: "https://api6.tzscan.io/v3/operations?type=Proposal&p=0&number=5",
+	success: function(d){
+		for(var i = 0; i < d.length; i++){
+			var name;
+			if(d[i].type.source.alias){
+				name = d[i].type.source.alias;
+			} else {
+				name = d[i].type.source.tz;
+				for(var j = 0; j < bakers.length; j++){
+					if(bakers[j].delegation_code == name){
+						name = bakers[j].baker_name;
 					}
 				}
-				var proposal = d[i].type.proposals.toString();
-				proposal = proposal.replace("Pt24m4xiPbLDhVgVfABUjirbmda3yohdN82Sp9FeuAXJ4eV9otd", "Athens A");
-				proposal = proposal.replace("Psd1ynUBhMZAeajwcZJAeq5NrxorM6UCU4GJqxZ7Bx2e9vUWB6z", "Athens B");
-				$("#RecentVotes").append("<tr><td>"+name+"</td><td>"+proposal+"</td></tr>");
 			}
-			
-	}});
+			var proposal = d[i].type.proposals.toString();
+			proposal = proposal.replace("Pt24m4xiPbLDhVgVfABUjirbmda3yohdN82Sp9FeuAXJ4eV9otd", "Athens A");
+			proposal = proposal.replace("Psd1ynUBhMZAeajwcZJAeq5NrxorM6UCU4GJqxZ7Bx2e9vUWB6z", "Athens B");
+			$("#1 .RecentVotes").append("<tr><td>"+name+"</td><td>"+proposal+"</td></tr>");
+		}
+		
+}});
 }
 function setCountDown(blocks){
 	var minutes = blocks % 60;
@@ -154,7 +181,7 @@ function getAthensA(bakers){
 							}
 						}
 					}
-					$("#AthensA").append("<tr><td>"+name+"</td><td>"+d[i].votes.toLocaleString()+"</td></tr>");
+					$("#p2 .AthensA").append("<tr><td>"+name+"</td><td>"+d[i].ballot.toLocaleString()+"</td></tr>");
 				}
 			}
 		}
