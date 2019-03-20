@@ -22,21 +22,22 @@ function getPeriodInfo(){
 				getBakerVotes();
 			} else if (kind == "testing_vote") {
 				$("#h2").addClass("active");
-				$("#title").text("Testing vote (WIP)");
+				$("#title").text("Testing vote");
 				$("#p2").css("display", "inline-block");
-				setCountDown((d.period + 2) * 32768 - d.level);
+				setCountDown((d.period + 1) * 32768 - d.level);
 				
-				ballot(d.period);
+				ballot(d.period, kind);
 			}
 			
 	}});
 }
-function ballot(period) {
+function ballot(period, kind) {
 	 $.ajax({
     type: "GET",
-    url: "https://api6.tzscan.io/v3/ballots/" + period,
+    url: "https://api6.tzscan.io/v3/ballots/" + period + "?period_kind=" + kind,
     success: function(d){
-		// showMsg(JSON.stringify(d));
+		showMsg(JSON.stringify(d));
+		showMsg(JSON.stringify(d.vote_yay));
 		 $('#p2 .a2').html(d.vote_yay.toLocaleString());
 		 $('#p2 .b2').html(d.vote_nay.toLocaleString());
 		 $('#p2 .c2').html(d.vote_pass.toLocaleString());
