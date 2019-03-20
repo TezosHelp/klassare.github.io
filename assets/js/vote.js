@@ -36,8 +36,8 @@ function ballot(period, kind) {
     type: "GET",
     url: "https://api6.tzscan.io/v3/ballots/" + period + "?period_kind=" + kind,
     success: function(d){
-		showMsg(JSON.stringify(d));
-		showMsg(JSON.stringify(d.vote_yay));
+		// showMsg(JSON.stringify(d));
+		// showMsg(JSON.stringify(d.vote_yay));
 		 $('#p2 .a2').html(d.vote_yay.toLocaleString());
 		 $('#p2 .b2').html(d.vote_nay.toLocaleString());
 		 $('#p2 .c2').html(d.vote_pass.toLocaleString());
