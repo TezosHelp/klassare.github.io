@@ -42,11 +42,24 @@ function ballot(period, kind) {
 		 $('#p2 .b2').html(d.vote_nay.toLocaleString());
 		 $('#p2 .c2').html(d.vote_pass.toLocaleString());
 		 var total = d.vote_yay + d.vote_nay + d.vote_pass;
-		 $('#p2 .d2').html(total.toLocaleString());
 		 $('#p2 .a3').html(Math.round(10000*d.vote_yay/total)/100+'%');
 		 $('#p2 .b3').html(Math.round(10000*d.vote_nay/total)/100+'%');
 		 $('#p2 .c3').html(Math.round(10000*d.vote_pass/total)/100+'%');
+		 totalVotes(period, total);
 		 
+    }
+  });
+}
+function totalVotes(period, voted) {
+	  $.ajax({
+    type: "GET",
+    url: "https://api6.tzscan.io/v3/total_voters/" + period,
+    success: function(d){
+		$('#p2 .d2').html(voted.toLocaleString());
+		$('#p2 .d3').html(Math.round(10000*voted/(d.votes))/100+'%');
+		$('#p2 .e2').html((d.votes - voted).toLocaleString());
+		$('#p2 .e3').html(Math.round(10000*(d.votes - voted)/(d.votes))/100+'%');
+		$('#p2 .f2').html((d.votes * 0.8).toLocaleString());
     }
   });
 }
