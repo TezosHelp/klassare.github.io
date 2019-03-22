@@ -16,6 +16,7 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="../assets/css/main.css" />
+		<link rel="stylesheet" href="extra.css" />
 		<link rel="shortcut icon" type="image/png" href="../images/favicon3.png"/>
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
@@ -121,6 +122,34 @@
 						</div></div>
 						<!-- Testing vote -->
 						<div id="p2" class="12u" style="display: none;">
+						<div>
+							<div class="row">
+								<div class="col-md-12">
+									<div id="progress1" class="progress">
+										<div class="bar-step" style="left: 80%">
+											<div class="label-txt">Super majority</div>
+											<div class="label-percent">80%</div>
+											<div class="label-line"></div>
+										</div>
+										<div class="progress-bar" style="width: 0%;"></div>
+								   </div>
+								</div>
+							</div>
+						</div>
+						<div>
+							<div class="row">
+								<div class="col-md-12">
+									<div id="progress2" class="progress">
+										<div class="bar-step" style="left: 80%">
+											<div class="label-txt">Quorum</div>
+											<div class="label-percent">80%</div>
+											<div class="label-line"></div>
+										</div>
+										<div class="progress-bar progress-bar-danger" style="width: 0%;"></div>
+								   </div>
+								</div>
+							</div>
+						</div>
 						<div class="row">
 							<table class="alt 6u">
 								<thead>
@@ -147,7 +176,15 @@
 										<td class="c3"></td>
 									</tr>
 								</tbody>
+								<tfoot>
+									<tr>
+										<td>Super majority</td>
+										<td class="g2"></td>
+										<td class="g3">80%</td>
+									</tr>
+								</tfoot>
 							</table>
+							<!--<div id="chart"></div>-->
 							<table class="alt 6u">
 								<thead>
 									<tr>

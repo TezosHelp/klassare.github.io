@@ -1,5 +1,6 @@
 $('document').ready(function(){
 	getPeriodInfo();
+	drawChart();
 });
 function showMsg(m){
   alert(m);
@@ -42,9 +43,21 @@ function ballot(period, kind) {
 		 $('#p2 .b2').html(d.vote_nay.toLocaleString());
 		 $('#p2 .c2').html(d.vote_pass.toLocaleString());
 		 var total = d.vote_yay + d.vote_nay + d.vote_pass;
-		 $('#p2 .a3').html(Math.round(10000*d.vote_yay/total)/100+'%');
+		 var yesPercentage = Math.round(10000*d.vote_yay/total)/100;
+		 $('#p2 .a3').html(yesPercentage+'%');
 		 $('#p2 .b3').html(Math.round(10000*d.vote_nay/total)/100+'%');
 		 $('#p2 .c3').html(Math.round(10000*d.vote_pass/total)/100+'%');
+		 $('#p2 .g2').html(Math.round(total*0.8).toLocaleString());
+		 
+		 $('#progress1 .progress-bar').css('width', yesPercentage+'%');
+		 $('#progress1 .progress-bar').html(yesPercentage+'%');
+		 if (yesPercentage > 80) {
+			$('#progress1 .progress-bar').addClass("progress-bar-success");
+		 } else if (yesPercentage > 40) {
+			$('#progress1 .progress-bar').addClass("progress-bar-warning");
+		 } else {
+			$('#progress1 .progress-bar').addClass("progress-bar-danger");
+		 }
 		 totalVotes(period, total);
 		 
     }
@@ -56,10 +69,21 @@ function totalVotes(period, voted) {
     url: "https://api6.tzscan.io/v3/total_voters/" + period,
     success: function(d){
 		$('#p2 .d2').html(voted.toLocaleString());
-		$('#p2 .d3').html(Math.round(10000*voted/(d.votes))/100+'%');
+		var votesPercentage = Math.round(10000*voted/(d.votes))/100;
+		$('#p2 .d3').html(votesPercentage+'%');
 		$('#p2 .e2').html((d.votes - voted).toLocaleString());
 		$('#p2 .e3').html(Math.round(10000*(d.votes - voted)/(d.votes))/100+'%');
 		$('#p2 .f2').html((d.votes * 0.8).toLocaleString());
+		
+		$('#progress2 .progress-bar').css('width', votesPercentage+'%');
+		$('#progress2 .progress-bar').html(votesPercentage+'%');
+		if (votesPercentage > 80) {
+			$('#progress2 .progress-bar').addClass("progress-bar-success");
+		 } else if (votesPercentage > 40) {
+			$('#progress2 .progress-bar').addClass("progress-bar-warning");
+		 } else {
+			$('#progress2 .progress-bar').addClass("progress-bar-danger");
+		 }
     }
   });
 }
