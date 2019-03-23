@@ -1,34 +1,39 @@
 
 .bar-step {
+	margin-left: 5px;
     position:absolute;
 	margin-top:-23px;
 	z-index:5;
-    font-size:16px;
+    font-size: 16px;
+	margin-left: 0px;
 }
 
 .label-txt {
     float: left;
 	position: relative;
-	width: 150px;
+	width: 100px;
 	text-align: right;
-	margin-left: -150;
+	margin-left: -100;
+	margin-right: 5px;
 }
-
-.label-line {
+.label-percent {
     float: right;
+	position: relative;
+    margin-left: 5px; 
+	width: 100px;
+	margin-right: -100px;
+}
+.label-line {
+    float: left;
     background: #000;
     height:60px;
 	width:1px;
-    margin-left: 5px;
-}
-
-.label-percent {
-    float: right;
-    margin-left: 5px;   
+	
 }
 .progress {
-	// margin-left: -100px;
+	margin-left: -21px;
 }
 .progress-bar {
 	font-size: 16px;
+	margin-left: 0px;
 }
