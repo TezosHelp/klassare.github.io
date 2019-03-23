@@ -46,7 +46,7 @@ function ballot(period, kind) {
 		 $('#p2 .a3').html(Math.round(10000*d.vote_yay/total)/100+'%');
 		 $('#p2 .b3').html(Math.round(10000*d.vote_nay/total)/100+'%');
 		 $('#p2 .c3').html(Math.round(10000*d.vote_pass/total)/100+'%');
-		 $('#p2 .g2').html(Math.round(total*0.8).toLocaleString());
+		 $('#p2 .g2').html(Math.round((d.vote_yay + d.vote_nay)*0.8).toLocaleString());
 		 
 		 $('#progress1 .progress-bar').css('width', yesPercentage+'%');
 		 $('#progress1 .progress-bar').html(yesPercentage+'%');
