@@ -23,7 +23,7 @@ function getPeriodInfo(){
 				getBakerVotes(kind);
 			} else if (kind == "testing_vote") {
 				$("#h2").addClass("active");
-				$("#title").text("Testing vote");
+				$("#title").text("Exploration vote");
 				$("#p2").css("display", "inline-block");
 				setCountDown((d.period + 1) * 32768 - d.level);
 				ballot(d.period, kind);
