@@ -1,0 +1,40 @@
+
+.bar-step {
+	margin-left: 5px;
+    position:absolute;
+	margin-top:-23px;
+	z-index:5;
+    font-size: 16px;
+	margin-left: 0px;
+}
+
+.label-txt {
+    float: left;
+	position: relative;
+	width: 100px;
+	text-align: right;
+	margin-left: -100;
+	margin-right: 5px;
+}
+.label-percent {
+    float: right;
+	position: relative;
+    margin-left: 5px; 
+	width: 100px;
+	margin-right: -100px;
+}
+.label-line {
+    float: left;
+    background: #000;
+    height:60px;
+	width:1px;
+	
+}
+.progress {
+	margin-left: -10px;
+	margin-right: -20px;
+}
+.progress-bar {
+	font-size: 16px;
+	margin-left: 0px;
+}
