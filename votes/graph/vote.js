@@ -1,5 +1,6 @@
 var XY = [];
 let Count = 0;
+let Done = false;
 let Period = 0;
 $('document').ready(function(){
 	// getPeriodInfo();
@@ -119,9 +120,11 @@ function getHead(votingRights, maxVotes) {
 	});
 }
 function getAllBallotVotes(votingRights, maxVotes, page) {
+	const number = 50;
+	$('#load').append('.');
 	$.ajax({
 		type: "GET",
-		url: "https://api6.tzscan.io/v3/operations?type=Ballot&p=" + page + "&number=50",
+		url: "https://api6.tzscan.io/v3/operations?type=Ballot&p=" + page + "&number=" + number,
 		success: function(d){
 			// showMsg(JSON.stringify(d[0]));
 			if (page === 0) {
@@ -137,10 +140,11 @@ function getAllBallotVotes(votingRights, maxVotes, page) {
 					}
 				}
 			}
-			if (d.length === 50 && d[49].type.period === Period) {
+			if (d.length === number && d[number - 1].type.period === Period) {
 				getAllBallotVotes(votingRights, maxVotes, page + 1);
+			} else {
+				Done = true;
 			}
-			// showMsg(JSON.stringify(XY));
 		}
 	});
 }
@@ -154,13 +158,14 @@ function addLevel(block, index, maxVotes) {
 			XY[index].push(d.level);
 			Count += 1;
 			// showMsg(JSON.stringify(XY));
-			if (Count === XY.length) {
+			if (Count === XY.length && Done) {
 				drawChart(XY, maxVotes);
 			}
 		}
 	});
 }
 function drawChart(chartData, maxVotes) {
+	$("#load").hide();
 	let yTot = 0;
 	let yYay = 0;
 	let yNay = 0;
