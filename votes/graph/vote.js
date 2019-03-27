@@ -285,6 +285,21 @@ function drawChart(chartData, maxVotes) {
 		dtick: 5
 	  },
 	  annotations: [
+	  {
+      xref: 'paper',
+      yref: 'paper',
+      x: -0.1,
+      y: -0.2,
+      xanchor: 'left',
+      yanchor: 'bottom',
+      text: 'Tezos.help',
+      font: {
+        family: 'Arial',
+        size: 12,
+        color: 'rgb(150,150,150)'
+      },
+      showarrow: false
+	  }
 	  ]
 	};
 	var result1 = {
