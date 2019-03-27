@@ -95,7 +95,7 @@ function totalVotes(period, voted) {
 function getGraphData() {
 	$.ajax({
 		type: "GET",
-		url: "http://mainnet-node.tzscan.io/chains/main/blocks/head/votes/listings",
+		url: "https://mainnet-node.tzscan.io/chains/main/blocks/head/votes/listings",
 		success: function(d){
 			// showMsg(JSON.stringify(d[0]));
 			let maxVotes = 0;
