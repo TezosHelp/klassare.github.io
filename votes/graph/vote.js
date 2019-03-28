@@ -208,6 +208,7 @@ function drawChart(chartData, maxVotes) {
 	  mode: 'lines',
 	  name: 'Participation',
 	  line: {
+		  width: 3,
 		  color: 'rgb(0, 0, 153)'
 	  }
 	};
@@ -215,8 +216,10 @@ function drawChart(chartData, maxVotes) {
 	  x: x2,
 	  y: y2,
 	  mode: 'lines',
-	  name: 'Approval',
+	  yaxis: 'y2',
+	  name: 'Acceptance',
 	  line: {
+		  width: 3,
 		  color: 'rgb(0, 153, 0)'
 	  }
 	};
@@ -227,7 +230,7 @@ function drawChart(chartData, maxVotes) {
 	  name: 'Quorum',
 	  line: {
 		dash: 'dot',
-		width: 2,
+		width: 3,
 		color: 'rgb(0, 0, 153)'
 	  }
 	};
@@ -235,10 +238,11 @@ function drawChart(chartData, maxVotes) {
 	  x: x3,
 	  y: y3,
 	  mode: 'lines',
+	  yaxis: 'y2',
 	  name: 'Supermajority',
 	  line: {
-		dash: 'dashdot',
-		width: 2,
+		dash: 'dot',
+		width: 3,
 		color: 'rgb(0, 153, 0)'
 	  }
 	};
@@ -253,7 +257,7 @@ function drawChart(chartData, maxVotes) {
 		hoverinfo: 'skip',
 		marker: {
 		  color: 'rgb(0, 0, 153)',
-		  size: 6
+		  size: 7,
 		}
 	  };
 	 var result00 = {
@@ -261,12 +265,13 @@ function drawChart(chartData, maxVotes) {
 		y: [y2[y2.length-1]],
 		type: 'scatter',
 		mode: 'markers',
+		yaxis: 'y2',
 		name: 'Currently',
 		showlegend: false,
 		hoverinfo: 'skip',
 		marker: {
 		  color: 'rgb(0, 153, 0)',
-		  size: 6
+		  size: 7
 		}
 	  };
 	data.push(result0, result00);
@@ -279,10 +284,22 @@ function drawChart(chartData, maxVotes) {
 		dtick: 5
 	  },
 	  yaxis: {
-		title: 'votes (%)',
+		title: 'participation (%)',
+		titlefont: {color: 'rgb(0, 0, 153)'},
+		tickfont: {color: 'rgb(0, 0, 153)'},
 		tickmode: "linear",
 		tick0: 0,
 		dtick: 5
+	  },
+	  yaxis2: {
+		title: 'votes (%)',
+		titlefont: {color: 'rgb(0, 153, 0)'},
+		tickfont: {color: 'rgb(0, 153, 0)'},
+		tickmode: "linear",
+		tick0: 0,
+		dtick: 5,
+		overlaying: 'y',
+		side: 'right'
 	  },
 	  annotations: [
 	  {
@@ -314,12 +331,14 @@ function drawChart(chartData, maxVotes) {
 		  size: 16,
 		  color: 'black'
 		},
+		bgcolor: '#FFFFFF',
 		showarrow: false
 	};
 		var result2 = {
 		xref: 'paper',
 		x: (x2[x2.length-1] + 0.5)/100,
 		y: y2[y2.length-1],
+		yref: 'y2',
 		xanchor: 'left',
 		yanchor: 'middle',
 		text: y2[y2.length-1] +'%',
@@ -328,6 +347,7 @@ function drawChart(chartData, maxVotes) {
 		  size: 16,
 		  color: 'black'
 		},
+		bgcolor: '#FFFFFF',
 		showarrow: false
 	};
 	layout.annotations.push(result1, result2);
