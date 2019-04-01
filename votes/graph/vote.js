@@ -9,7 +9,7 @@ $('document').ready(function(){
 function showMsg(m){
   alert(m);
 }
-function getPeriodInfo(){
+/*function getPeriodInfo(){
 	$.ajax({
 		type: "GET",
 		url: "https://api6.tzscan.io/v3/voting_period_info",
@@ -35,8 +35,8 @@ function getPeriodInfo(){
 			}
 			
 	}});
-}
-function ballot(period, kind) {
+}*/
+/*function ballot(period, kind) {
 	 $.ajax({
     type: "GET",
     url: "https://api6.tzscan.io/v3/ballots/" + period + "?period_kind=" + kind,
@@ -66,8 +66,8 @@ function ballot(period, kind) {
 		 
     }
   });
-}
-function totalVotes(period, voted) {
+}*/
+/*function totalVotes(period, voted) {
 	  $.ajax({
     type: "GET",
     url: "https://api6.tzscan.io/v3/total_voters/" + period,
@@ -90,7 +90,7 @@ function totalVotes(period, voted) {
 		 }
     }
   });
-}
+}*/
 
 
 function getGraphData() {

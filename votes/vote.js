@@ -110,10 +110,14 @@ function updateUnusedVotes(period){
   });
 }
 function getBakerVotes(kind){
-	$.ajax({
+
+	/*$.ajax({
 	type: "GET",
 	url: "https://api.mytezosbaker.com/v1/bakers/",
-	success: function(d){
+	success: function(d){*/
+		var d = {
+			bakers: []
+		};
 		d.bakers.push({delegation_code: "tz1Yju7jmmsaUiG9qQLoYv35v5pHgnWoLWbt", baker_name: "Polychain Capital"});
 		d.bakers.push({delegation_code: "tz1NpWrAyDL9k2Lmnyxcgr9xuJakbBxdq7FB", baker_name: "gate.io"});
 		if (kind === "proposal") {
@@ -123,7 +127,7 @@ function getBakerVotes(kind){
 		} else if (kind === "testing_vote") {
 			latestTestingVotes(d.bakers);
 		}
-	}});
+	//}});
 }
 function latestTestingVotes(bakers) {
 	$.ajax({
