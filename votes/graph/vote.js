@@ -278,6 +278,7 @@ function drawChart(chartData, maxVotes) {
 	var layout = {
 	  title: 'Exploration vote',
 	  xaxis: {
+		  domain: [0, 0.96],
 		title: 'time (%)',
 		tickmode: "linear",
 		tick0: 0,
@@ -298,26 +299,11 @@ function drawChart(chartData, maxVotes) {
 		tickmode: "linear",
 		tick0: 0,
 		dtick: 5,
+		anchor: 'x',
 		overlaying: 'y',
 		side: 'right'
 	  },
-	  annotations: [
-	  {
-      xref: 'paper',
-      yref: 'paper',
-      x: -0.1,
-      y: -0.2,
-      xanchor: 'left',
-      yanchor: 'bottom',
-      text: 'Tezos.help',
-      font: {
-        family: 'Arial',
-        size: 12,
-        color: 'rgb(150,150,150)'
-      },
-      showarrow: false
-	  }
-	  ]
+	  annotations: []
 	};
 	var result1 = {
 		xref: 'paper',
