@@ -110,24 +110,20 @@ function updateUnusedVotes(period){
   });
 }
 function getBakerVotes(kind){
-
-	/*$.ajax({
-	type: "GET",
-	url: "https://api.mytezosbaker.com/v1/bakers/",
-	success: function(d){*/
-		var d = {
-			bakers: []
-		};
-		d.bakers.push({delegation_code: "tz1Yju7jmmsaUiG9qQLoYv35v5pHgnWoLWbt", baker_name: "Polychain Capital"});
-		d.bakers.push({delegation_code: "tz1NpWrAyDL9k2Lmnyxcgr9xuJakbBxdq7FB", baker_name: "gate.io"});
-		if (kind === "proposal") {
-			getAthensA(d.bakers);
-			getAthensB(d.bakers);
-			latestVote(d.bakers);
-		} else if (kind === "testing_vote") {
-			latestTestingVotes(d.bakers);
-		}
-	//}});
+	$.ajax({
+		type: "GET",
+		url: "https://api.mytezosbaker.com/v1/bakers/",
+		success: function(d){
+			d.bakers.push({delegation_code: "tz1Yju7jmmsaUiG9qQLoYv35v5pHgnWoLWbt", baker_name: "Polychain Capital"});
+			d.bakers.push({delegation_code: "tz1NpWrAyDL9k2Lmnyxcgr9xuJakbBxdq7FB", baker_name: "gate.io"});
+			if (kind === "proposal") {
+				getAthensA(d.bakers);
+				getAthensB(d.bakers);
+				latestVote(d.bakers);
+			} else if (kind === "testing_vote") {
+				latestTestingVotes(d.bakers);
+			}
+	}});
 }
 function latestTestingVotes(bakers) {
 	$.ajax({
