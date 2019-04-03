@@ -336,6 +336,6 @@ function drawChart(chartData, maxVotes) {
 		bgcolor: '#FFFFFF',
 		showarrow: false
 	};
-	layout.annotations.push(result1, result2);
+	layout.annotations.push(result2, result1);
 	Plotly.newPlot('chart', data, layout);
 }
