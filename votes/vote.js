@@ -27,6 +27,13 @@ function getPeriodInfo(){
 				setCountDown((d.period + 1) * 32768 - d.level);
 				ballot(d.period, kind);
 				getBakerVotes(kind);
+			} else {
+				$("#h3").addClass("active");
+				$("#title").text("Testing phase");
+				$("#p2").css("display", "inline-block");
+				setCountDown((d.period + 1) * 32768 - d.level);
+				ballot(d.period, kind);
+				getBakerVotes(kind);
 			}
 			
 	}});

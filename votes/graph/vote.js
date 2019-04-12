@@ -9,90 +9,6 @@ $('document').ready(function(){
 function showMsg(m){
   alert(m);
 }
-/*function getPeriodInfo(){
-	$.ajax({
-		type: "GET",
-		url: "https://api6.tzscan.io/v3/voting_period_info",
-		success: function(d){
-			// showMsg(JSON.stringify(d));
-			var kind = d.kind;
-			if (kind == "proposal") {
-				$("#h1").addClass("active");
-				$("#title").text("Proposal vote");
-				$("#p1").css("display", "inline-block");
-				setCountDown((d.period + 1) * 32768 - d.level);
-				
-				updateUnusedVotes(d.period);
-				updateVotes();
-				getBakerVotes(kind);
-			} else if (kind == "testing_vote") {
-				$("#h2").addClass("active");
-				$("#title").text("Exploration vote");
-				$("#p2").css("display", "inline-block");
-				setCountDown((d.period + 1) * 32768 - d.level);
-				ballot(d.period, kind);
-				getBakerVotes(kind);
-			}
-			
-	}});
-}*/
-/*function ballot(period, kind) {
-	 $.ajax({
-    type: "GET",
-    url: "https://api6.tzscan.io/v3/ballots/" + period + "?period_kind=" + kind,
-    success: function(d){
-		// showMsg(JSON.stringify(d));
-		// showMsg(JSON.stringify(d.vote_yay));
-		 $('#p2 .a2').html(d.vote_yay.toLocaleString());
-		 $('#p2 .b2').html(d.vote_nay.toLocaleString());
-		 $('#p2 .c2').html(d.vote_pass.toLocaleString());
-		 var total = d.vote_yay + d.vote_nay + d.vote_pass;
-		 var yesPercentage = Math.round(10000*d.vote_yay/(d.vote_yay + d.vote_nay))/100;
-		 $('#p2 .a3').html(Math.round(10000*d.vote_yay/total)/100+'%');
-		 $('#p2 .b3').html(Math.round(10000*d.vote_nay/total)/100+'%');
-		 $('#p2 .c3').html(Math.round(10000*d.vote_pass/total)/100+'%');
-		 $('#p2 .g2').html(Math.round((d.vote_yay + d.vote_nay)*0.8).toLocaleString());
-		 
-		 $('#progress1 .progress-bar').css('width', yesPercentage+'%');
-		 $('#progress1 .progress-bar').html(yesPercentage+'%');
-		 if (yesPercentage > 80) {
-			$('#progress1 .progress-bar').addClass("progress-bar-success");
-		 } else if (yesPercentage > 40) {
-			$('#progress1 .progress-bar').addClass("progress-bar-warning");
-		 } else {
-			$('#progress1 .progress-bar').addClass("progress-bar-danger");
-		 }
-		 totalVotes(period, total);
-		 
-    }
-  });
-}*/
-/*function totalVotes(period, voted) {
-	  $.ajax({
-    type: "GET",
-    url: "https://api6.tzscan.io/v3/total_voters/" + period,
-    success: function(d){
-		$('#p2 .d2').html(voted.toLocaleString());
-		var votesPercentage = Math.round(10000*voted/(d.votes))/100;
-		$('#p2 .d3').html(votesPercentage+'%');
-		$('#p2 .e2').html((d.votes - voted).toLocaleString());
-		$('#p2 .e3').html(Math.round(10000*(d.votes - voted)/(d.votes))/100+'%');
-		$('#p2 .f2').html((d.votes * 0.8).toLocaleString());
-		
-		$('#progress2 .progress-bar').css('width', votesPercentage+'%');
-		$('#progress2 .progress-bar').html(votesPercentage+'%');
-		if (votesPercentage > 80) {
-			$('#progress2 .progress-bar').addClass("progress-bar-success");
-		 } else if (votesPercentage > 40) {
-			$('#progress2 .progress-bar').addClass("progress-bar-warning");
-		 } else {
-			$('#progress2 .progress-bar').addClass("progress-bar-danger");
-		 }
-    }
-  });
-}*/
-
-
 function getGraphData() {
 	$.ajax({
 		type: "GET",
@@ -112,7 +28,11 @@ function getHead(votingRights, maxVotes) {
 		type: "GET",
 		url: "https://api6.tzscan.io/v3/head",
 		success: function(d){
-			XY.push([0, 'Pass', d.level]);
+			let level = d.level;
+			if (level > 393215) {
+				level = 393215;
+			}
+			XY.push([0, 'Pass', level]);
 			Count = 1;
 			getAllBallotVotes(votingRights, maxVotes, 0);
 			
@@ -336,6 +256,6 @@ function drawChart(chartData, maxVotes) {
 		bgcolor: '#FFFFFF',
 		showarrow: false
 	};
-	layout.annotations.push(result2, result1);
+	// layout.annotations.push(result2, result1);
 	Plotly.newPlot('chart', data, layout);
 }
