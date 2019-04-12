@@ -179,7 +179,7 @@ function setCountDown(blocks){
 	var days = (hours - hours % 24) / 24;
 	hours = hours % 24;
 	if (days === 0) {
-		$("#countDown").html(hours + " hours " + minutes + "minutes");
+		$("#countDown").html(hours + " hours " + minutes + " minutes");
 	} else {
 		$("#countDown").html(days + " days " + hours + " hours");
 	}
