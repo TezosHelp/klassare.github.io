@@ -20,7 +20,7 @@ function getPeriodInfo(){
 				updateUnusedVotes(d.period);
 				updateVotes();
 				getBakerVotes(kind);
-			} else if (kind == "testing_vote") {
+			} else if (kind == "testing_vote2") {
 				$("#h2").addClass("active");
 				$("#title").text("Exploration vote");
 				$("#p2").css("display", "inline-block");
@@ -30,10 +30,7 @@ function getPeriodInfo(){
 			} else {
 				$("#h3").addClass("active");
 				$("#title").text("Testing phase");
-				$("#p2").css("display", "inline-block");
 				setCountDown((d.period + 1) * 32768 - d.level);
-				ballot(d.period, kind);
-				getBakerVotes(kind);
 			}
 			
 	}});
