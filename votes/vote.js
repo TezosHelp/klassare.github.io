@@ -32,7 +32,7 @@ function getPeriodInfo(){
 				$("#title").text("Testing phase");
 				setCountDown((d.period + 1) * 32768 - d.level);
 			} else {
-				$("#h2").addClass("active");
+				$("#h4").addClass("active");
 				$("#title").text("Promotion vote");
 				$("#p2").css("display", "inline-block");
 				setCountDown((d.period + 1) * 32768 - d.level);
