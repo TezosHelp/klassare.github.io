@@ -143,7 +143,7 @@ function getBakerVotes(kind){
 function latestTestingVotes(bakers) {
 	$.ajax({
 	type: "GET",
-	url: "https://api6.tzscan.io/v3/operations?type=Ballot&p=0&number=10",
+	url: "https://api6.tzscan.io/v3/operations?type=Ballot&p=0&number=5",
 	success: function(d){
 		for(var i = 0; i < d.length; i++){
 			var name;
