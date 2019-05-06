@@ -2,12 +2,25 @@ var XY = [];
 let Count = 0;
 let Done = false;
 let Period = 0;
+let Quorum = 0.8;
+let Title = "Exploration vote";
 $('document').ready(function(){
-	// getPeriodInfo();
-	getGraphData();
+	getPeriodInfo();
 });
 function showMsg(m){
   alert(m);
+}
+function getPeriodInfo(){
+	$.ajax({
+		type: "GET",
+		url: "https://api6.tzscan.io/v3/voting_period_info",
+		success: function(d){
+			Quorum = d.quorum / 10000;
+			if (d.kind === "promotion_vote") {
+				Title = "Promotion vote";
+			}
+			getGraphData()
+	}});
 }
 function getGraphData() {
 	$.ajax({
@@ -29,9 +42,9 @@ function getHead(votingRights, maxVotes) {
 		url: "https://api6.tzscan.io/v3/head",
 		success: function(d){
 			let level = d.level;
-			if (level > 393215) {
+			/*if (level > 393215) {
 				level = 393215;
-			}
+			}*/
 			XY.push([0, 'Pass', level]);
 			Count = 1;
 			getAllBallotVotes(votingRights, maxVotes, 0);
@@ -52,9 +65,8 @@ function getAllBallotVotes(votingRights, maxVotes, page) {
 			}
 			for(var i = 0; i < d.length; i++){
 				for (var j = 0; j < votingRights.length; j++) {
-					if (votingRights[j].pkh === d[i].type.source.tz) {
+					if (votingRights[j].pkh === d[i].type.source.tz && d[i].type.period === Period) {
 						XY.push([votingRights[j].rolls, d[i].type.ballot]);
-						// showMsg(JSON.stringify(XY));
 						addLevel(d[i].block_hash, XY.length - 1, maxVotes);
 						break;
 					}
@@ -95,9 +107,11 @@ function drawChart(chartData, maxVotes) {
 	var y2 = [];
 	var x3 = [];
 	var y3 = [];
+	var y4 = [];
 	const startBlock = chartData[0][2] - (chartData[0][2] % 32768);
 	x3.push(0);
-	y3.push(80);
+	y3.push(100 * Quorum);
+	y4.push(80);
 	for (var i = chartData.length - 1; i >= 0; i--) {
 		if (chartData[i].length === 3) {
 			yTot = yTot + chartData[i][0];
@@ -115,12 +129,14 @@ function drawChart(chartData, maxVotes) {
 			x1.push(xValue);
 			x2.push(xValue);
 			x3.push(xValue);
-			y3.push(80);
+			y3.push(100 * Quorum);
+			y4.push(80);
 			y2.push(Math.round((10000 * yYay)/(yYay + yNay))/100);
 		}
 	}
 	x3.push(100);
-	y3.push(80);
+	y3.push(100 * Quorum);
+	y4.push(80);
 	// 32768
 	var trace1 = {
 	  x: x1,
@@ -156,7 +172,7 @@ function drawChart(chartData, maxVotes) {
 	};
 	var trace4 = {
 	  x: x3,
-	  y: y3,
+	  y: y4,
 	  mode: 'lines',
 	  yaxis: 'y2',
 	  name: 'Supermajority',
@@ -196,7 +212,7 @@ function drawChart(chartData, maxVotes) {
 	  };
 	data.push(result0, result00);
 	var layout = {
-	  title: 'Exploration vote',
+	  title: Title,
 	  xaxis: {
 		  domain: [0, 0.96],
 		title: 'time (%)',

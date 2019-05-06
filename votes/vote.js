@@ -20,22 +20,29 @@ function getPeriodInfo(){
 				updateUnusedVotes(d.period);
 				updateVotes();
 				getBakerVotes(kind);
-			} else if (kind == "testing_vote2") {
+			} else if (kind == "testing_vote") {
 				$("#h2").addClass("active");
 				$("#title").text("Exploration vote");
 				$("#p2").css("display", "inline-block");
 				setCountDown((d.period + 1) * 32768 - d.level);
-				ballot(d.period, kind);
+				ballot(d.period, kind, d.quorum);
 				getBakerVotes(kind);
-			} else {
+			} else if (kind == "testing") {
 				$("#h3").addClass("active");
 				$("#title").text("Testing phase");
 				setCountDown((d.period + 1) * 32768 - d.level);
+			} else {
+				$("#h2").addClass("active");
+				$("#title").text("Promotion vote");
+				$("#p2").css("display", "inline-block");
+				setCountDown((d.period + 1) * 32768 - d.level);
+				ballot(d.period, kind, d.quorum);
+				getBakerVotes(kind);
 			}
 			
 	}});
 }
-function ballot(period, kind) {
+function ballot(period, kind, q) {
 	 $.ajax({
     type: "GET",
     url: "https://api6.tzscan.io/v3/ballots/" + period + "?period_kind=" + kind,
@@ -50,8 +57,12 @@ function ballot(period, kind) {
 		 $('#p2 .a3').html(Math.round(10000*d.vote_yay/total)/100+'%');
 		 $('#p2 .b3').html(Math.round(10000*d.vote_nay/total)/100+'%');
 		 $('#p2 .c3').html(Math.round(10000*d.vote_pass/total)/100+'%');
-		 $('#p2 .g2').html(Math.round((d.vote_yay + d.vote_nay)*0.8).toLocaleString());
+		 $('#p2 .f3').html(q/100+'%');
+		 $('#p2 .g2').html(Math.round((d.vote_yay + d.vote_nay)*q/10000).toLocaleString());
 		 
+		 /* Progress bars */
+		 $('#progress2 .bar-step').css('left', q / 100 + '%');
+		 $('#progress2 .label-percent').html(q / 100 + '%');
 		 $('#progress1 .progress-bar').css('width', yesPercentage+'%');
 		 $('#progress1 .progress-bar').html(yesPercentage+'%');
 		 if (yesPercentage > 80) {
@@ -61,12 +72,12 @@ function ballot(period, kind) {
 		 } else {
 			$('#progress1 .progress-bar').addClass("progress-bar-danger");
 		 }
-		 totalVotes(period, total);
+		 totalVotes(period, total, q);
 		 
     }
   });
 }
-function totalVotes(period, voted) {
+function totalVotes(period, voted, q) {
 	  $.ajax({
     type: "GET",
     url: "https://api6.tzscan.io/v3/total_voters/" + period,
@@ -76,7 +87,7 @@ function totalVotes(period, voted) {
 		$('#p2 .d3').html(votesPercentage+'%');
 		$('#p2 .e2').html((d.votes - voted).toLocaleString());
 		$('#p2 .e3').html(Math.round(10000*(d.votes - voted)/(d.votes))/100+'%');
-		$('#p2 .f2').html((d.votes * 0.8).toLocaleString());
+		$('#p2 .f2').html(Math.round(d.votes * (q / 10000) + 0.5).toLocaleString());
 		
 		$('#progress2 .progress-bar').css('width', votesPercentage+'%');
 		$('#progress2 .progress-bar').html(votesPercentage+'%');
@@ -124,7 +135,7 @@ function getBakerVotes(kind){
 				getAthensA(d.bakers);
 				getAthensB(d.bakers);
 				latestVote(d.bakers);
-			} else if (kind === "testing_vote") {
+			} else if (kind === "testing_vote"|| kind === "promotion_vote") {
 				latestTestingVotes(d.bakers);
 			}
 	}});
