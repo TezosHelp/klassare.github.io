@@ -54,9 +54,9 @@ function ballot(period, kind, q) {
 		 $('#p2 .c2').html(d.vote_pass.toLocaleString());
 		 var total = d.vote_yay + d.vote_nay + d.vote_pass;
 		 var yesPercentage = Math.round(10000*d.vote_yay/(d.vote_yay + d.vote_nay))/100;
-		 $('#p2 .a3').html(Math.round(10000*d.vote_yay/total)/100+'%');
-		 $('#p2 .b3').html(Math.round(10000*d.vote_nay/total)/100+'%');
-		 $('#p2 .c3').html(Math.round(10000*d.vote_pass/total)/100+'%');
+		 $('#p2 .a3').html(Math.round(10000*d.vote_yay/(d.vote_yay + d.vote_nay))/100+'%');
+		 $('#p2 .b3').html(Math.round(10000*d.vote_nay/(d.vote_yay + d.vote_nay))/100+'%');
+		 $('#p2 .c3').html('-');
 		 $('#p2 .f3').html(q/100+'%');
 		 $('#p2 .g2').html(Math.round((d.vote_yay + d.vote_nay)*q/10000).toLocaleString());
 		 
