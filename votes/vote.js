@@ -173,7 +173,8 @@ function timeAgo(index, block_hash) {
 		var timeNow = new Date();
 		var timeDiff = timeNow - blockTime;
 		var output = "";
-		if (timeDiff < 1000 * 60) { // less than 1 hour
+		$("#recentVote" + index).html(timeDiff);
+		if (timeDiff < 1000 * 60 * 60) { // less than 1 hour
 			output = Math.round(timeDiff / (1000 * 60)) + " minutes"
 		} else {
 			output = Math.round(timeDiff / (1000 * 60 * 60)) + " hours"
