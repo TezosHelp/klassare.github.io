@@ -159,10 +159,28 @@ function latestBallotVotes(bakers) {
 				}
 			}
 			var proposal = d[i].type.ballot.toString();
-			$("#p2 .RecentVotes").append("<tr><td>"+name+"</td><td>"+proposal+"</td></tr>");
+			$("#p2 .RecentVotes").append("<tr><td>"+name+"</td><td id=\"recentVote" + i + "\">" + i + "</td><td>"+proposal+"</td></tr>");
+			timeAgo(i, d[i].block_hash);
 		}
-		
 	}});
+}
+function timeAgo(index, block_hash) {
+	$.ajax({
+	type: "GET",
+	url: "https://api6.tzscan.io//v3/timestamp/" + block_hash,
+	success: function(d){
+		var blockTime = new Date(d);
+		var timeNow = new Date();
+		var timeDiff = timeNow - blockTime;
+		var output = "";
+		if (timeDiff < 1000 * 60) { // less than 1 hour
+			output = Math.round(timeDiff / (1000 * 60)) + " minutes"
+		} else {
+			output = Math.round(timeDiff / (1000 * 60 * 60)) + " hours"
+		}
+		$("#recentVote" + index).html(output);
+	}});
+		
 }
 function latestVote(bakers){
 	$.ajax({
