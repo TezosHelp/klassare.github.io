@@ -125,25 +125,26 @@ function updateUnusedVotes(period){
   });
 }
 function getBakerVotes(kind){
-	$.ajax({
+	/*$.ajax({
 		type: "GET",
 		url: "https://api.mytezosbaker.com/v1/bakers/",
 		success: function(d){
 			d.bakers.push({delegation_code: "tz1Yju7jmmsaUiG9qQLoYv35v5pHgnWoLWbt", baker_name: "Polychain Capital"});
-			d.bakers.push({delegation_code: "tz1NpWrAyDL9k2Lmnyxcgr9xuJakbBxdq7FB", baker_name: "gate.io"});
+			d.bakers.push({delegation_code: "tz1NpWrAyDL9k2Lmnyxcgr9xuJakbBxdq7FB", baker_name: "gate.io"});*/
+			var bakerList = mapOfPublicBakers;
 			if (kind === "proposal") {
-				getAthensA(d.bakers);
-				getAthensB(d.bakers);
-				latestVote(d.bakers);
+				getAthensA(bakerList);
+				getAthensB(bakerList);
+				latestVote(bakerList);
 			} else if (kind === "testing_vote"|| kind === "promotion_vote") {
-				latestTestingVotes(d.bakers);
+				latestBallotVotes(bakerList);
 			}
-	}});
+	// }});
 }
-function latestTestingVotes(bakers) {
+function latestBallotVotes(bakers) {
 	$.ajax({
 	type: "GET",
-	url: "https://api6.tzscan.io/v3/operations?type=Ballot&p=0&number=5",
+	url: "https://api6.tzscan.io/v3/operations?type=Ballot&p=0&number=10",
 	success: function(d){
 		for(var i = 0; i < d.length; i++){
 			var name;
@@ -166,7 +167,7 @@ function latestTestingVotes(bakers) {
 function latestVote(bakers){
 	$.ajax({
 	type: "GET",
-	url: "https://api6.tzscan.io/v3/operations?type=Proposal&p=0&number=5",
+	url: "https://api6.tzscan.io/v3/operations?type=Proposal&p=0&number=10",
 	success: function(d){
 		for(var i = 0; i < d.length; i++){
 			var name;
