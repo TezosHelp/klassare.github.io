@@ -72,12 +72,12 @@ function ballot(period, kind, q) {
 		 } else {
 			$('#progress1 .progress-bar').addClass("progress-bar-danger");
 		 }
-		 totalVotes(period, total, q);
+		 totalVotes(period, total, q, yesPercentage);
 		 
     }
   });
 }
-function totalVotes(period, voted, q) {
+function totalVotes(period, voted, q, yesP) {
 	  $.ajax({
     type: "GET",
     url: "https://api6.tzscan.io/v3/total_voters/" + period,
@@ -91,13 +91,16 @@ function totalVotes(period, voted, q) {
 		
 		$('#progress2 .progress-bar').css('width', votesPercentage+'%');
 		$('#progress2 .progress-bar').html(votesPercentage+'%');
-		if (votesPercentage > 80) {
+		if (votesPercentage >= q/100) {
 			$('#progress2 .progress-bar').addClass("progress-bar-success");
-		 } else if (votesPercentage > 40) {
+		 } else if (votesPercentage >= q / 200) {
 			$('#progress2 .progress-bar').addClass("progress-bar-warning");
 		 } else {
 			$('#progress2 .progress-bar').addClass("progress-bar-danger");
 		 }
+		if (period === 13 && votesPercentage > (q / yesP)) {
+			$("#athensPass").css("display", "inline-block");
+		}
     }
   });
 }
@@ -159,7 +162,7 @@ function latestBallotVotes(bakers) {
 				}
 			}
 			var proposal = d[i].type.ballot.toString();
-			$("#p2 .RecentVotes").append("<tr><td>"+name+"</td><td id=\"recentVote" + i + "\">" + i + "</td><td>"+proposal+"</td></tr>");
+			$("#p2 .RecentVotes").append("<tr><td id=\"recentVote" + i + "\">" + i + "</td><td>"+name+"</td><td>"+proposal+"</td></tr>");
 			timeAgo(i, d[i].block_hash);
 		}
 	}});
