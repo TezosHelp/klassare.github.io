@@ -17,9 +17,9 @@ function getPeriodInfo(){
 				$("#p1").css("display", "inline-block");
 				setCountDown((d.period + 1) * 32768 - d.level);
 				
-				updateUnusedVotes(d.period);
-				updateVotes();
-				getBakerVotes(kind);
+				//updateUnusedVotes(d.period);
+				//updateVotes();
+				//getBakerVotes(kind);
 			} else if (kind == "testing_vote") {
 				$("#h2").addClass("active");
 				$("#title").text("Exploration vote");

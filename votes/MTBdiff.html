@@ -628,12 +628,9 @@
 						var newIdentity = true;
 						for (var j = 0; j < d.bakers.length; j++) {
 							if (kukaiData[i].identity === d.bakers[j].delegation_code) {
-								newIdentity = false;
+								d.bakers.splice(j,1);
 								break;
 							}
-						}
-						if (newIdentity) {
-							d.bakers.push({delegation_code: kukaiData[i].identity, baker_name: kukaiData[i].baker_name});
 						}
 					}
 					var count = "countOfPublicBakers = " + d.bakers.length + ";\n";
