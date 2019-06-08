@@ -1,46 +1,50 @@
 $('document').ready(function(){
-	getPeriodInfo();
+	init();
 });
 function showMsg(m){
   alert(m);
 }
+async function init() {
+	var pInfo = await getPeriodInfo();
+	var kind = pInfo.kind;
+	if (kind == "proposal") {
+		$("#h1").addClass("active");
+		$("#title").text("Proposal vote");
+		$("#p1").css("display", "inline-block");
+		setCountDown((pInfo.period + 1) * 32768 - pInfo.level);
+		var totalVotes = await updateUnusedVotes(pInfo.period);
+		updateVotes(totalVotes);
+		//getBakerVotes(kind);
+	} else if (kind == "testing_vote") {
+		$("#h2").addClass("active");
+		$("#title").text("Exploration vote");
+		$("#p2").css("display", "inline-block");
+		setCountDown((pInfo.period + 1) * 32768 - pInfo.level);
+		ballot(pInfo.period, kind, pInfo.quorum);
+		getBakerVotes(kind);
+	} else if (kind == "testing") {
+		$("#h3").addClass("active");
+		$("#title").text("Testing phase");
+		setCountDown((pInfo.period + 1) * 32768 - pInfo.level);
+	} else {
+		$("#h4").addClass("active");
+		$("#title").text("Promotion vote");
+		$("#p2").css("display", "inline-block");
+		setCountDown((pInfo.period + 1) * 32768 - pInfo.level);
+		ballot(pInfo.period, kind, pInfo.quorum);
+		getBakerVotes(kind);
+	}
+}
 function getPeriodInfo(){
-	$.ajax({
-		type: "GET",
-		url: "https://api6.tzscan.io/v3/voting_period_info",
-		success: function(d){
-			// showMsg(JSON.stringify(d));
-			var kind = d.kind;
-			if (kind == "proposal") {
-				$("#h1").addClass("active");
-				$("#title").text("Proposal vote");
-				$("#p1").css("display", "inline-block");
-				setCountDown((d.period + 1) * 32768 - d.level);
-				
-				//updateUnusedVotes(d.period);
-				//updateVotes();
-				//getBakerVotes(kind);
-			} else if (kind == "testing_vote") {
-				$("#h2").addClass("active");
-				$("#title").text("Exploration vote");
-				$("#p2").css("display", "inline-block");
-				setCountDown((d.period + 1) * 32768 - d.level);
-				ballot(d.period, kind, d.quorum);
-				getBakerVotes(kind);
-			} else if (kind == "testing") {
-				$("#h3").addClass("active");
-				$("#title").text("Testing phase");
-				setCountDown((d.period + 1) * 32768 - d.level);
-			} else {
-				$("#h4").addClass("active");
-				$("#title").text("Promotion vote");
-				$("#p2").css("display", "inline-block");
-				setCountDown((d.period + 1) * 32768 - d.level);
-				ballot(d.period, kind, d.quorum);
-				getBakerVotes(kind);
-			}
-			
-	}});
+	return new Promise(resolve => {
+		$.ajax({
+			type: "GET",
+			url: "https://api6.tzscan.io/v3/voting_period_info",
+			success: function(d){
+				resolve(d);
+
+		}});
+	});
 }
 function ballot(period, kind, q) {
 	 $.ajax({
@@ -88,7 +92,6 @@ function totalVotes(period, voted, q, yesP) {
 		$('#p2 .e2').html((d.votes - voted).toLocaleString());
 		$('#p2 .e3').html(Math.round(10000*(d.votes - voted)/(d.votes))/100+'%');
 		$('#p2 .f2').html(Math.round(d.votes * (q / 10000) + 0.5).toLocaleString());
-		
 		$('#progress2 .progress-bar').css('width', votesPercentage+'%');
 		$('#progress2 .progress-bar').html(votesPercentage+'%');
 		if (votesPercentage >= q/100) {
@@ -104,28 +107,34 @@ function totalVotes(period, voted, q, yesP) {
     }
   });
 }
-function updateVotes(){
+function updateVotes(totalVotes){
   $.ajax({
     type: "GET",
     url: "https://rpc.tezrpc.me/chains/main/blocks/head/votes/proposals",
     success: function(d){
-		 $('#p1 .a2').html(d[1][1].toLocaleString());
-		 $('#p1 .b2').html(d[0][1].toLocaleString());
-		 $('#p1 .a3').html(Math.round(10000*d[1][1]/(d[1][1]+d[0][1]))/100+'%');
-		 $('#p1 .b3').html(Math.round(10000*d[0][1]/(d[1][1]+d[0][1]))/100+'%');
+		var total = 0;
+		for (var i = 0; i < d.length; i++) {
+			$("#p1 #proposals").append("<tr><td>" + d[i][0] + "</td><td>" + d[i][1].toLocaleString() + "</td><td id=\"percentage" + i + "\"></td></tr>");
+		}
+		for (var i = 0; i < d.length; i++) {
+			$('#p1 #proposals #percentage' + i).html(Math.round((10000*d[i][1])/totalVotes)/100+'%');
+		}
     }
   });
 }
 function updateUnusedVotes(period){
-  $.ajax({
-    type: "GET",
-    url: "https://api6.tzscan.io/v3/total_proposal_votes/" + period,
-    success: function(d){
-		// showMsg(JSON.stringify(d));
-		$('#p1 .c2').html(d.unused_votes.toLocaleString());
-		$('#p1 .c3').html(Math.round((10000 * d.unused_votes) / d.total_votes)/100 + '%');
-	}
-  });
+	return new Promise(resolve => {
+	  $.ajax({
+		type: "GET",
+		url: "https://api6.tzscan.io/v3/total_proposal_votes/" + period,
+		success: function(d){
+			// showMsg(JSON.stringify(d));
+			$('#p1 .unusedVotes').html(d.unused_votes.toLocaleString());
+			$('#p1 .unusedPercentage').html(Math.round((10000 * d.unused_votes) / d.total_votes)/100 + '%');
+			resolve(d.total_votes);
+		}
+	  });
+	});
 }
 function getBakerVotes(kind){
 	/*$.ajax({
