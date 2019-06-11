@@ -14,7 +14,7 @@ async function init() {
 		setCountDown((pInfo.period + 1) * 32768 - pInfo.level);
 		var totalVotes = await updateUnusedVotes(pInfo.period);
 		updateVotes(totalVotes);
-		//getBakerVotes(kind);
+		getBakerVotes(kind);
 	} else if (kind == "testing_vote") {
 		$("#h2").addClass("active");
 		$("#title").text("Exploration vote");
@@ -145,8 +145,8 @@ function getBakerVotes(kind){
 			d.bakers.push({delegation_code: "tz1NpWrAyDL9k2Lmnyxcgr9xuJakbBxdq7FB", baker_name: "gate.io"});*/
 			var bakerList = mapOfPublicBakers;
 			if (kind === "proposal") {
-				getAthensA(bakerList);
-				getAthensB(bakerList);
+				//getAthensA(bakerList);
+				//getAthensB(bakerList);
 				latestVote(bakerList);
 			} else if (kind === "testing_vote"|| kind === "promotion_vote") {
 				latestBallotVotes(bakerList);
@@ -200,6 +200,10 @@ function latestVote(bakers){
 	type: "GET",
 	url: "https://api6.tzscan.io/v3/operations?type=Proposal&p=0&number=10",
 	success: function(d){
+		var period = 0;
+		if (d.length)
+			period = d[0].type.period;
+		console.log(period);
 		for(var i = 0; i < d.length; i++){
 			var name;
 			if(d[i].type.source.alias){
@@ -212,10 +216,13 @@ function latestVote(bakers){
 					}
 				}
 			}
+			console.log("append");
+			if (d[i].type.period === period) {
 			var proposal = d[i].type.proposals.toString();
 			proposal = proposal.replace("Pt24m4xiPbLDhVgVfABUjirbmda3yohdN82Sp9FeuAXJ4eV9otd", "Athens A");
 			proposal = proposal.replace("Psd1ynUBhMZAeajwcZJAeq5NrxorM6UCU4GJqxZ7Bx2e9vUWB6z", "Athens B");
-			$("#1 .RecentVotes").append("<tr><td>"+name+"</td><td>"+proposal+"</td></tr>");
+			$("#p1 .RecentVotes").append("<tr><td>"+name+"</td><td>"+proposal+"</td></tr>");
+			}
 		}
 		
 }});
