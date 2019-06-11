@@ -218,10 +218,11 @@ function latestVote(bakers){
 			}
 			console.log("append");
 			if (d[i].type.period === period) {
-			var proposal = d[i].type.proposals.toString();
-			proposal = proposal.replace("Pt24m4xiPbLDhVgVfABUjirbmda3yohdN82Sp9FeuAXJ4eV9otd", "Athens A");
-			proposal = proposal.replace("Psd1ynUBhMZAeajwcZJAeq5NrxorM6UCU4GJqxZ7Bx2e9vUWB6z", "Athens B");
-			$("#p1 .RecentVotes").append("<tr><td>"+name+"</td><td>"+proposal+"</td></tr>");
+				var proposal = d[i].type.proposals.toString();
+				proposal = proposal.replace("Pt24m4xiPbLDhVgVfABUjirbmda3yohdN82Sp9FeuAXJ4eV9otd", "Athens A");
+				proposal = proposal.replace("Psd1ynUBhMZAeajwcZJAeq5NrxorM6UCU4GJqxZ7Bx2e9vUWB6z", "Athens B");
+				$("#p1 .RecentVotes").append("<tr><td id=\"recentVote" + i + "\"></td><td>"+name+"</td><td>"+proposal+"</td></tr>");
+				timeAgo(i, d[i].block_hash);
 			}
 		}
 		
