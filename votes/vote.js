@@ -203,7 +203,6 @@ function latestVote(bakers){
 		var period = 0;
 		if (d.length)
 			period = d[0].type.period;
-		console.log(period);
 		for(var i = 0; i < d.length; i++){
 			var name;
 			if(d[i].type.source.alias){
@@ -216,7 +215,6 @@ function latestVote(bakers){
 					}
 				}
 			}
-			console.log("append");
 			if (d[i].type.period === period) {
 				var proposal = d[i].type.proposals.toString();
 				proposal = proposal.replace("Pt24m4xiPbLDhVgVfABUjirbmda3yohdN82Sp9FeuAXJ4eV9otd", "Athens A");
