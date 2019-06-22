@@ -14,14 +14,14 @@ async function init() {
 		setCountDown((pInfo.period + 1) * 32768 - pInfo.level);
 		var totalVotes = await updateUnusedVotes(pInfo.period);
 		updateVotes(totalVotes);
-		getBakerVotes(kind);
+		getBakerVotes(kind, pInfo.period);
 	} else if (kind == "testing_vote") {
 		$("#h2").addClass("active");
 		$("#title").text("Exploration vote");
 		$("#p2").css("display", "inline-block");
 		setCountDown((pInfo.period + 1) * 32768 - pInfo.level);
 		ballot(pInfo.period, kind, pInfo.quorum);
-		getBakerVotes(kind);
+		getBakerVotes(kind, pInfo.period);
 	} else if (kind == "testing") {
 		$("#h3").addClass("active");
 		$("#title").text("Testing phase");
@@ -32,7 +32,7 @@ async function init() {
 		$("#p2").css("display", "inline-block");
 		setCountDown((pInfo.period + 1) * 32768 - pInfo.level);
 		ballot(pInfo.period, kind, pInfo.quorum);
-		getBakerVotes(kind);
+		getBakerVotes(kind, pInfo.period);
 	}
 }
 function getPeriodInfo(){
@@ -136,7 +136,7 @@ function updateUnusedVotes(period){
 	  });
 	});
 }
-function getBakerVotes(kind){
+function getBakerVotes(kind, period){
 	/*$.ajax({
 		type: "GET",
 		url: "https://api.mytezosbaker.com/v1/bakers/",
@@ -147,13 +147,13 @@ function getBakerVotes(kind){
 			if (kind === "proposal") {
 				//getAthensA(bakerList);
 				//getAthensB(bakerList);
-				latestVote(bakerList);
-			} else if (kind === "testing_vote"|| kind === "promotion_vote") {
-				latestBallotVotes(bakerList);
+				latestVote(bakerList, period);
+			} else if (kind === "testing_vote" || kind === "promotion_vote") {
+				latestBallotVotes(bakerList, period);
 			}
 	// }});
 }
-function latestBallotVotes(bakers) {
+function latestBallotVotes(bakers, period) {
 	$.ajax({
 	type: "GET",
 	url: "https://api6.tzscan.io/v3/operations?type=Ballot&p=0&number=10",
@@ -171,8 +171,10 @@ function latestBallotVotes(bakers) {
 				}
 			}
 			var proposal = d[i].type.ballot.toString();
-			$("#p2 .RecentVotes").append("<tr><td id=\"recentVote" + i + "\">" + i + "</td><td>"+name+"</td><td>"+proposal+"</td></tr>");
-			timeAgo(i, d[i].block_hash);
+			if (d[i].type.period === period) {
+				$("#p2 .RecentVotes").append("<tr><td id=\"recentVote" + i + "\">" + i + "</td><td>"+name+"</td><td>"+proposal+"</td></tr>");
+				timeAgo(i, d[i].block_hash);
+			}
 		}
 	}});
 }
@@ -195,7 +197,7 @@ function timeAgo(index, block_hash) {
 	}});
 		
 }
-function latestVote(bakers){
+function latestVote(bakers, period){
 	$.ajax({
 	type: "GET",
 	url: "https://api6.tzscan.io/v3/operations?type=Proposal&p=0&number=10",
@@ -219,8 +221,10 @@ function latestVote(bakers){
 				var proposal = d[i].type.proposals.toString();
 				proposal = proposal.replace("Pt24m4xiPbLDhVgVfABUjirbmda3yohdN82Sp9FeuAXJ4eV9otd", "Athens A");
 				proposal = proposal.replace("Psd1ynUBhMZAeajwcZJAeq5NrxorM6UCU4GJqxZ7Bx2e9vUWB6z", "Athens B");
-				$("#p1 .RecentVotes").append("<tr><td id=\"recentVote" + i + "\"></td><td>"+name+"</td><td>"+proposal+"</td></tr>");
-				timeAgo(i, d[i].block_hash);
+				if (d[i].type.period === period) {
+					$("#p1 .RecentVotes").append("<tr><td id=\"recentVote" + i + "\"></td><td>"+name+"</td><td>"+proposal+"</td></tr>");
+					timeAgo(i, d[i].block_hash);
+				}
 			}
 		}
 		
