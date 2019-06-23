@@ -31,7 +31,7 @@
 		<script src="assets/js/main.js"></script>
 	</head>
 	<body>
-		<div id="container1" style="display:none">
+		<div id="container1">
 			<!-- Sidebar -->
 			<section id="sidebar">
 				<div class="inner">
@@ -60,7 +60,7 @@
 							<p>We help you navigate the world of Tezos - The self-amending crypto-ledger</p>
 							<div class="row">
 								<div class="6u"><p class="introMsg"><b><a href="./votes">Follow the voting here!</a></b></p></div>
-								<div class="6u"><p class="introMsg"><b><a href="" onclick="return setNoobView();">Ask a noob question!</a></b></p></div>
+								<div class="6u"><p class="introMsg"><b><a href="./noob-question">Ask a noob question!</a></b></p></div>
 							</div>
 							<p class="introMsg"><a href="https://tplus.dev/" target="_blank">Tplus</a> - a new developer tool</p>
 							<p class="introMsg"><a href="https://ligolang.org/" target="_blank">LIGO</a> added as a new smart contract language.</p>
@@ -805,60 +805,6 @@
 										<li><input type="submit" value="Send Message" class="special" /></li>
 										<li><input type="reset" value="Reset" /></li>
 									</ul>
-								</div>
-							</div>
-						</form>
-					</div>
-				</section>
-			</div>
-
-		<!-- Footer -->
-			<footer id="footer" class="wrapper alt">
-				<div class="inner">
-					<ul class="menu">
-						<li>&copy Tezos.help, All rights reserved</li><li>Donations: tz1THDT9M3R7nAhreusVce4idEgML3TrkpLE </li><li><a href="" onclick="return setContactView();">Contact</a></li>
-					</ul>
-				</div>
-			</footer>
-		</div>
-		<!-- Noob questions -->
-		<div id="container3" style="display:none">
-		<!-- Header -->
-			<header id="header">
-				<a href="" onclick="return setMainViewUp();" class="title"><- Go Back</a>
-				<nav>
-					<ul>
-						<li><a href="" onclick="return setMainViewUp();">Home</a></li>
-						<li><a href="" onclick="return setNoobView();" class="active">Noob question</a></li>
-					</ul>
-				</nav>
-			</header>
-
-		<!-- Wrapper -->
-			<div id="wrapper">
-			<!-- Main -->
-				<section id="main" class="wrapper">
-					<div class="inner">
-						<h1 class="major">Suggest a question for <a href="https://twitter.com/tezosnoob" target="_blank">Tezos Noob</a> to ask</h1>
-						<p>
-						<span class="image left"><img src="images/tezosNoob-100.jpg" alt></span>
-						<span class="image right"><img src="images/noobWallet-100.png" alt></span>
-						Don't forget to follow Tezos noob on <a href="https://twitter.com/tezosnoob" target="_blank">twitter!</a> You can also support him by sending some tez to his noob wallet: tz1Z9MxKUBcbA6SKyKu9VLif8PeiQ5fkpCeo
-						</p>
-						<!-- Form -->
-						<form method="post" action="https://formspree.io/mail.berichte@gmail.com">
-							<div class="row uniform">
-								<div class="12u$">
-									<textarea name="question" id="question" placeholder="Enter a question that you want Tezos noob to ask..." rows="6" required></textarea>
-								</div>
-								<div class="6u 12u$(xsmall)">
-									<input type="text" name="name" id="name2" value="" placeholder="Name (optional)" />
-								</div>
-								<div class="3u">
-									<input type="submit" value="Send Message" class="special" />
-								</div>
-								<div class="3u">
-									<input type="reset" value="Reset" />
 								</div>
 							</div>
 						</form>
