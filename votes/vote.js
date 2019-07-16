@@ -113,6 +113,9 @@ async function getBallotResult() {
 */
 async function getProposalVotes() {
 	const proposalResult = await getProposalResult();
+	if (proposalResult.length === 0) {
+		$("#p1 #proposals").append("<tr><td>No proposals yet...</td><td>-</td><td>-</td></tr>");
+	}
 	for (var i = 0; i < proposalResult.length; i++) {
 		$("#p1 #proposals").append("<tr><td>" + proposalResult[i][0] + "</td><td>" + proposalResult[i][1].toLocaleString() + "</td><td id=\"percentage" + i + "\"></td></tr>");
 	}
