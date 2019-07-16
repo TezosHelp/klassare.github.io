@@ -16,6 +16,7 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/gh/cryptonomic/conseiljs/dist-web/conseiljs.min.js"></script>
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="../assets/css/main.css" />
 		<link rel="stylesheet" href="extra.css" />
@@ -42,11 +43,6 @@
 				<section id="main" class="wrapper">
 					<div class="inner">
 						<div class="row">
-							<div id="athensPass" class="2u" style="display: none;">
-								<span class="image fit">
-									<img src="../images/athensPass.png">
-								</span>
-							</div>
 							<h1 id="title" class="major 6u"></h1>
 							<p class="right center bold 3u"><BR><BR>
 							<img src="../images/time-left.png"> <b id="countDown"></b></p>
@@ -58,7 +54,7 @@
 								<thead>
 									<tr>
 										<th>Proposal</th>
-										<th>Votes</th>
+										<th>Upvotes</th>
 										<th>Percentage</th>
 									</tr>
 								</thead>
@@ -73,7 +69,7 @@
 								</tfoot>
 							</table>
 							<!-- Recent votes -->
-							<div class="table-wrapper">
+							<!--<div class="table-wrapper">
 								<table class="alt">
 									<thead>
 										<tr>
@@ -85,7 +81,7 @@
 									<tbody class="RecentVotes">
 									</tbody>
 								</table>
-							</div>
+							</div>-->
 						</div>
 						<!-- Testing vote -->
 						<div id="p2" class="12u" style="display: none;">
@@ -173,7 +169,7 @@
 									</tr>
 								</tfoot>
 							</table>
-							<div class="6u 12u$(medium)">
+							<!--<div class="6u 12u$(medium)">
 								<a href="./graph" target="_blank" class="button special fit">Explore in graph</a><BR>
 								</div>
 							</div>
@@ -183,13 +179,14 @@
 										<tr>
 											<th>Age</th>
 											<th>Voter</th>
+											<th>Votes</th>
 											<th>Ballot</th>
 										</tr>
 									</thead>
 									<tbody class="RecentVotes">
 									</tbody>
 								</table>
-							</div>
+							</div>-->
 						</div>
 				</section>
 			</div>
@@ -199,7 +196,7 @@
 				<div class="inner">
 					<ul class="menu">
 						<li>&copy Tezos.help, All rights reserved</li><li>Donations: tz1THDT9M3R7nAhreusVce4idEgML3TrkpLE</li> <li><a href="mailto:info@tezos.help" target="_blank">Contact</a></li>
-						<li>This page is powered by TzScan
+						<li>This page is powered by <a href="https://github.com/Cryptonomic/ConseilJS" target="_blank">ConseilJS</a> & TezRPC
 					</ul>
 				</div>
 			</footer>
