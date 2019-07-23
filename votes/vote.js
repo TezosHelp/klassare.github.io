@@ -6,9 +6,7 @@ function showMsg(m){
   alert(m);
 }
 async function init() {
-	const head = await conseiljs.TezosConseilClient.getBlockHead(conseilServerInfo, 'mainnet').then(
-		((ans) => ans[0])
-	);
+	const head = await conseiljs.TezosConseilClient.getBlockHead(conseilServerInfo, 'mainnet');
 	const votingPeriod = head.meta_voting_period;
 	const blocksRemaining = 32768 - head.meta_voting_period_position;
 	const periodKind = head.period_kind;
