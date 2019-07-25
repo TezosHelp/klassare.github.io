@@ -1,4 +1,5 @@
 const conseilServerInfo = { url: 'https://conseil-prod.cryptonomic-infra.tech', apiKey: 'klassare' };
+const api = 'http://node1.nyc.tezos.org.sg:8090';
 $('document').ready(function(){
 	init();
 });
@@ -17,7 +18,7 @@ async function init() {
 			$("#h1").addClass("active");
 			$("#title").text("Proposal vote");
 			$("#p1").css("display", "inline-block");
-			getProposalVotes();
+			getProposalVotes(votingPeriod, periodKind);
 			break;
 		case 'testing_vote':
 			$("#h2").addClass("active");
@@ -109,18 +110,42 @@ async function getBallotResult() {
 /*
 	### Get Proposal votes ###
 */
-async function getProposalVotes() {
-	const proposalResult = await getProposalResult();
+async function getProposalVotes(votingPeriod, periodKind) {
+	let promises = [];
+	promises.push(getProposalResult());
+	promises.push(getRecentProposalVotes(votingPeriod));
+	promises.push(getRollCount());
+	let proposalResult, votes, bakers, totalRolls;
+	await Promise.all(promises)
+		.then(res => {
+			console.log(res);
+			proposalResult = res[0];
+			votes = res[1];
+			bakers = res[2].bakers;
+			totalRolls = res[2].totalRolls;
+		});
 	if (proposalResult.length === 0) {
 		$("#p1 #proposals").append("<tr><td>No proposals yet...</td><td>-</td><td>-</td></tr>");
 	}
 	for (var i = 0; i < proposalResult.length; i++) {
 		$("#p1 #proposals").append("<tr><td>" + proposalResult[i][0] + "</td><td>" + proposalResult[i][1].toLocaleString() + "</td><td id=\"percentage" + i + "\"></td></tr>");
 	}
-	const {bakers, totalRolls} = await getRollCount();
 	for (var i = 0; i < proposalResult.length; i++) {
 		$('#p1 #proposals #percentage' + i).html(Math.round((10000*proposalResult[i][1])/totalRolls)/100+'%');
 	}
+	/* Recent votes */
+	promises = [];
+	for (const vote of votes) {
+		promises.push(timeAgo(vote.block_hash));
+	}
+	// const timeAgos = await Promise.all(promises);
+	for (const i in votes) {
+		$("#p1 .RecentVotes").append("<tr><td id=\"recentVote" + i + "\">" + votes[i].type.timeAgo + "</td><td>"
+		+ bakerRolls(votes[i].type.source.tz, bakers) + "</td><td>"+pkh2alias(votes[i].type.source.tz)+"</td><td>"
+		+ proposalHash2alias(votes[i].type.proposals) +"</td></tr>");
+	}
+	if (votes.length > 0)
+		$("#p1 .RecentVotesContainer").css("display", "inline-block");
 }
 /*
 	Get current result in a proposal vote
@@ -130,8 +155,36 @@ async function getProposalResult() {
 		.then(function(ans) {return ans.json();});
 	return proposalResult;
 }
-
-function setCountDown(blocks){
+async function getRecentProposalVotes(votingPeriod) {
+	let votes = await fetch(api + '/v3/operations?type=Proposal&p=0&number=10')
+		.then(ans => { return ans.json(); });
+	let filteredVotes = [];
+	for (const vote of votes) {
+		if (vote.type.period === votingPeriod) {
+			let proposalsFormated = '';
+			for (const proposal of vote.type.proposals) {
+				if (proposalsFormated === '')
+					proposalsFormated = proposal;
+				else
+					proposalsFormated = proposalsFormated + '<BR>' + proposal;
+			}
+			vote.type.proposals = proposalsFormated;
+			filteredVotes.push(vote);
+		}
+	}
+	promises = [];
+	for (const vote of filteredVotes) {
+		promises.push(timeAgo(vote.block_hash));
+	}
+	const timeAgos = await Promise.all(promises);
+	for (const i in filteredVotes) {
+		console.log(filteredVotes[i]);
+		filteredVotes[i].type.timeAgo = timeAgos[i];
+	}
+	return filteredVotes;
+}
+/* Utils */
+async function setCountDown(blocks){
 	var minutes = blocks % 60;
 	var hours = (blocks - minutes) / 60;
 	var days = (hours - hours % 24) / 24;
@@ -141,4 +194,37 @@ function setCountDown(blocks){
 	} else {
 		$("#countDown").html(days + " days " + hours + " hours");
 	}
+}
+async function timeAgo(block_hash) {
+	const d = await fetch(api + '/v3/timestamp/' + block_hash)
+		.then(res => { return res.json(); });
+	const blockTime = new Date(d);
+	const timeNow = new Date();
+	const timeDiff = timeNow - blockTime;
+	let output = "";
+	if (timeDiff < 1000 * 60 * 60) { // less than 1 hour
+		output = Math.round(timeDiff / (1000 * 60)) + " minutes";
+	} else {
+		output = Math.round(timeDiff / (1000 * 60 * 60)) + " hours";
+	}
+	return output;
+ }
+ function bakerRolls(baker, bakers) {
+	const index = bakers.findIndex(b => b.pkh === baker);
+	if (index >= 0)
+		return bakers[index].rolls;
+	else
+		return 0;
+}
+function pkh2alias(pkh) {
+	const index = mapOfPublicBakers.findIndex(b => b.delegation_code === pkh);
+	if (index >= 0)
+		return mapOfPublicBakers[index].baker_name;
+	return pkh
+}
+function proposalHash2alias(hash) {
+	const index = proposalMap.findIndex(p => p.hash === hash);
+	if (index >= 0)
+		return proposalMap[index].alias;
+	return pkh
 }
