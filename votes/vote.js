@@ -131,9 +131,14 @@ async function getProposalVotes(periodKind) {
 		$("#p1 #proposals").append("<tr><td>No proposals yet...</td><td>-</td><td>-</td></tr>");
 	}
 	for (var i = 0; i < proposalResult.length; i++) {
-		proposalLabel = proposalHash2alias(proposalResult[i][0])
-		if (proposalLabel !== proposalResult[i][0])
+		proposalHash2alias(proposalResult[i][0])
+		proposalLabel = proposalHash2alias(proposalResult[i][0], true)
+		if (proposalLabel !== proposalResult[i][0]) {
+			if (proposalLabel.url)
+				proposalLabel = '<a href="' + proposalLabel.url + '" target="_blank">' +proposalLabel.alias + '</a> - ' + proposalResult[i][0];
+			else
 			proposalLabel = proposalLabel + ' - ' + proposalResult[i][0];
+		}
 		$("#p1 #proposals").append("<tr><td>" + proposalLabel + "</td><td>" + proposalResult[i][1].toLocaleString() + "</td><td id=\"percentage" + i + "\"></td></tr>");
 	}
 	for (var i = 0; i < proposalResult.length; i++) {
@@ -145,6 +150,8 @@ async function getProposalVotes(periodKind) {
 		+ bakerRolls(votes[i].type.source.tz, bakers).toLocaleString() + "</td><td>"+pkh2alias(votes[i].type.source.tz)+"</td><td>"
 		+ proposalHash2alias(votes[i].type.proposals) +"</td></tr>");
 	}
+	if (votes.length < PAGE_SIZE)
+			$("#p1 .button").css("display", "none");
 	if (votes.length > 0)
 		$("#p1 .RecentVotesContainer").css("display", "inline-block");
 }
@@ -238,9 +245,12 @@ function pkh2alias(pkh) {
 		return mapOfPublicBakers[index].baker_name;
 	return pkh
 }
-function proposalHash2alias(hash) {
+function proposalHash2alias(hash, appendLink = false) {
 	const index = proposalMap.findIndex(p => p.hash === hash);
-	if (index >= 0)
+	if (index >= 0) {
+		if (appendLink)
+			return {alias: proposalMap[index].alias, url: proposalMap[index].url}
 		return proposalMap[index].alias;
+	}
 	return hash
 }
