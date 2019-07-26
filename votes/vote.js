@@ -1,5 +1,5 @@
 const conseilServerInfo = { url: 'https://conseil-prod.cryptonomic-infra.tech', apiKey: 'klassare' };
-const api = 'http://node1.nyc.tezos.org.sg:8090';
+const api = 'https://api.tzbeta.net:8080';
 $('document').ready(function(){
 	init();
 });
