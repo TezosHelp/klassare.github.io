@@ -1,5 +1,9 @@
 const conseilServerInfo = { url: 'https://conseil-prod.cryptonomic-infra.tech', apiKey: 'klassare' };
 const api = 'https://api.tzbeta.net:8080';
+const PAGE_SIZE = 10;
+let votingPeriod;
+let bakers;
+let pageCounter = 0;
 $('document').ready(function(){
 	init();
 });
@@ -8,7 +12,7 @@ function showMsg(m){
 }
 async function init() {
 	const head = await conseiljs.TezosConseilClient.getBlockHead(conseilServerInfo, 'mainnet');
-	const votingPeriod = head.meta_voting_period;
+	votingPeriod = head.meta_voting_period;
 	const blocksRemaining = 32768 - head.meta_voting_period_position;
 	const periodKind = head.period_kind;
 	const quorum = head.current_expected_quorum;
@@ -18,7 +22,7 @@ async function init() {
 			$("#h1").addClass("active");
 			$("#title").text("Proposal vote");
 			$("#p1").css("display", "inline-block");
-			getProposalVotes(votingPeriod, periodKind);
+			getProposalVotes(periodKind);
 			break;
 		case 'testing_vote':
 			$("#h2").addClass("active");
@@ -91,7 +95,7 @@ async function getBallotVotes(quorum) {
 	Return number of rolls for each baker and the total number
 */
 async function getRollCount() {
-	const bakers	= await fetch('https://mainnet.tezrpc.me/chains/main/blocks/head/votes/listings')
+	const bakers = await fetch('https://mainnet.tezrpc.me/chains/main/blocks/head/votes/listings')
 		.then(function(ans) {return ans.json();});
 	let totalRolls = 0;
 	for (let i = 0; i < bakers.length; i++) {
@@ -110,12 +114,12 @@ async function getBallotResult() {
 /*
 	### Get Proposal votes ###
 */
-async function getProposalVotes(votingPeriod, periodKind) {
+async function getProposalVotes(periodKind) {
 	let promises = [];
 	promises.push(getProposalResult());
-	promises.push(getRecentProposalVotes(votingPeriod));
+	promises.push(getRecentProposalVotes());
 	promises.push(getRollCount());
-	let proposalResult, votes, bakers, totalRolls;
+	let proposalResult, votes, totalRolls;
 	await Promise.all(promises)
 		.then(res => {
 			proposalResult = res[0];
@@ -136,11 +140,6 @@ async function getProposalVotes(votingPeriod, periodKind) {
 		$('#p1 #proposals #percentage' + i).html(Math.round((10000*proposalResult[i][1])/totalRolls)/100+'%');
 	}
 	/* Recent votes */
-	promises = [];
-	for (const vote of votes) {
-		promises.push(timeAgo(vote.block_hash));
-	}
-	// const timeAgos = await Promise.all(promises);
 	for (const i in votes) {
 		$("#p1 .RecentVotes").append("<tr><td id=\"recentVote" + i + "\">" + votes[i].type.timeAgo + "</td><td>"
 		+ bakerRolls(votes[i].type.source.tz, bakers).toLocaleString() + "</td><td>"+pkh2alias(votes[i].type.source.tz)+"</td><td>"
@@ -157,8 +156,8 @@ async function getProposalResult() {
 		.then(function(ans) {return ans.json();});
 	return proposalResult;
 }
-async function getRecentProposalVotes(votingPeriod) {
-	let votes = await fetch(api + '/v3/operations?type=Proposal&p=0&number=10')
+async function getRecentProposalVotes(page = 0) {
+	let votes = await fetch(api + '/v3/operations?type=Proposal&p=' + page + '&number=' + PAGE_SIZE)
 		.then(ans => { return ans.json(); });
 	let filteredVotes = [];
 	for (const vote of votes) {
@@ -183,6 +182,22 @@ async function getRecentProposalVotes(votingPeriod) {
 		filteredVotes[i].type.timeAgo = timeAgos[i];
 	}
 	return filteredVotes;
+}
+function loadMoreProposalVotes() {
+	getRecentProposalVotes(++pageCounter).then(votes => {
+		promises = [];
+		for (const vote of votes) {
+			promises.push(timeAgo(vote.block_hash));
+		}
+		for (const i in votes) {
+			$("#p1 .RecentVotes").append("<tr><td id=\"recentVote" + i + "\">" + votes[i].type.timeAgo + "</td><td>"
+			+ bakerRolls(votes[i].type.source.tz, bakers).toLocaleString() + "</td><td>"+pkh2alias(votes[i].type.source.tz)+"</td><td>"
+			+ proposalHash2alias(votes[i].type.proposals) +"</td></tr>");
+		}
+		if (votes.length < PAGE_SIZE)
+			$("#p1 .button").css("display", "none");
+	});
+	return false;
 }
 /* Utils */
 async function setCountDown(blocks){
