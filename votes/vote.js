@@ -128,7 +128,10 @@ async function getProposalVotes(votingPeriod, periodKind) {
 		$("#p1 #proposals").append("<tr><td>No proposals yet...</td><td>-</td><td>-</td></tr>");
 	}
 	for (var i = 0; i < proposalResult.length; i++) {
-		$("#p1 #proposals").append("<tr><td>" + proposalResult[i][0] + "</td><td>" + proposalResult[i][1].toLocaleString() + "</td><td id=\"percentage" + i + "\"></td></tr>");
+		proposalLabel = proposalHash2alias(proposalResult[i][0])
+		if (proposalLabel !== proposalResult[i][0])
+			proposalLabel = proposalLabel + ' - ' + proposalResult[i][0];
+		$("#p1 #proposals").append("<tr><td>" + proposalLabel + "</td><td>" + proposalResult[i][1].toLocaleString() + "</td><td id=\"percentage" + i + "\"></td></tr>");
 	}
 	for (var i = 0; i < proposalResult.length; i++) {
 		$('#p1 #proposals #percentage' + i).html(Math.round((10000*proposalResult[i][1])/totalRolls)/100+'%');
@@ -226,5 +229,5 @@ function proposalHash2alias(hash) {
 	const index = proposalMap.findIndex(p => p.hash === hash);
 	if (index >= 0)
 		return proposalMap[index].alias;
-	return pkh
+	return hash
 }
