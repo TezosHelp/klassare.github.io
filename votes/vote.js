@@ -118,7 +118,6 @@ async function getProposalVotes(votingPeriod, periodKind) {
 	let proposalResult, votes, bakers, totalRolls;
 	await Promise.all(promises)
 		.then(res => {
-			console.log(res);
 			proposalResult = res[0];
 			votes = res[1];
 			bakers = res[2].bakers;
@@ -144,7 +143,7 @@ async function getProposalVotes(votingPeriod, periodKind) {
 	// const timeAgos = await Promise.all(promises);
 	for (const i in votes) {
 		$("#p1 .RecentVotes").append("<tr><td id=\"recentVote" + i + "\">" + votes[i].type.timeAgo + "</td><td>"
-		+ bakerRolls(votes[i].type.source.tz, bakers) + "</td><td>"+pkh2alias(votes[i].type.source.tz)+"</td><td>"
+		+ bakerRolls(votes[i].type.source.tz, bakers).toLocaleString() + "</td><td>"+pkh2alias(votes[i].type.source.tz)+"</td><td>"
 		+ proposalHash2alias(votes[i].type.proposals) +"</td></tr>");
 	}
 	if (votes.length > 0)
@@ -181,7 +180,6 @@ async function getRecentProposalVotes(votingPeriod) {
 	}
 	const timeAgos = await Promise.all(promises);
 	for (const i in filteredVotes) {
-		console.log(filteredVotes[i]);
 		filteredVotes[i].type.timeAgo = timeAgos[i];
 	}
 	return filteredVotes;
