@@ -1,5 +1,6 @@
 const conseilServerInfo = { url: 'https://conseil-prod.cryptonomic-infra.tech', apiKey: 'klassare' };
 const api = 'https://api.tzbeta.net:8080';
+const rpc = 'https://tezos-prod.cryptonomic-infra.tech';
 const PAGE_SIZE = 10;
 let votingPeriod;
 let bakers;
@@ -95,7 +96,7 @@ async function getBallotVotes(quorum) {
 	Return number of rolls for each baker and the total number
 */
 async function getRollCount() {
-	const bakers = await fetch('https://mainnet.tezrpc.me/chains/main/blocks/head/votes/listings')
+	const bakers = await fetch(rpc + '/chains/main/blocks/head/votes/listings')
 		.then(function(ans) {return ans.json();});
 	let totalRolls = 0;
 	for (let i = 0; i < bakers.length; i++) {
@@ -107,7 +108,7 @@ async function getRollCount() {
 	Get current result in a ballot vote
 */
 async function getBallotResult() {
-	const ballotResult = await fetch('https://mainnet.tezrpc.me/chains/main/blocks/head/votes/ballots')
+	const ballotResult = await fetch(rpc + '/chains/main/blocks/head/votes/ballots')
 		.then(function(ans) {return ans.json();});
 	return ballotResult;
 }
@@ -159,7 +160,7 @@ async function getProposalVotes(periodKind) {
 	Get current result in a proposal vote
 */
 async function getProposalResult() {
-	const proposalResult = await fetch('https://rpc.tezrpc.me/chains/main/blocks/head/votes/proposals')
+	const proposalResult = await fetch(rpc + '/chains/main/blocks/head/votes/proposals')
 		.then(function(ans) {return ans.json();});
 	return proposalResult;
 }
