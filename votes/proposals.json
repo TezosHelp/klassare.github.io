@@ -1,4 +1,5 @@
 proposalMap = [
 {hash: "PtdRxBHvc91c2ea2evV6wkoqnzW7TadTg9aqS9jAn2GbcPGtumD", alias: "Brest A"},
-{hash: "PsBABY5nk4JhdEv1N1pZbt6m6ccB9BfNqa23iKZcHBh23jmRS9f", alias: "Babylon", url: 'https://blog.nomadic-labs.com/babylon-proposal-injected.html'}
+{hash: "PsBABY5nk4JhdEv1N1pZbt6m6ccB9BfNqa23iKZcHBh23jmRS9f", alias: "Babylon", url: 'https://blog.nomadic-labs.com/babylon-proposal-injected.html'},
+{hash: "PsBABY5HQTSkA4297zNHfsZNKtxULfL18y95qb3m53QJiXGmrbU", alias: "Babylon++", url: 'https://twitter.com/labosnomades/status/1157292681934118914'}
 ];
