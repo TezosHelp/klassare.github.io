@@ -49,7 +49,18 @@ async function init() {
 	### Get all data for ballot votes ###
 */
 async function getBallotVotes(quorum) {
-	const ballotResult = await getBallotResult();
+	let promises = [];
+	promises.push(getBallotResult());
+	promises.push(getRecentBallotVotes());
+	promises.push(getRollCount());
+	let proposalResult, votes, totalRolls;
+	await Promise.all(promises)
+		.then(res => {
+			ballotResult = res[0];
+			votes = res[1];
+			bakers = res[2].bakers;
+			totalRolls = res[2].totalRolls;
+		});
 	
 	$('#p2 .a2').html(ballotResult.yay.toLocaleString());
 	$('#p2 .b2').html(ballotResult.nay.toLocaleString());
@@ -74,8 +85,6 @@ async function getBallotVotes(quorum) {
 	} else {
 		$('#progress1 .progress-bar').addClass("progress-bar-danger");
 	}
-	
-	const {bakers, totalRolls} = await getRollCount();
 	$('#p2 .d2').html(voted.toLocaleString());
 	const votesPercentage = Math.round(10000*voted/(totalRolls))/100;
 	$('#p2 .d3').html(votesPercentage+'%');
@@ -86,11 +95,21 @@ async function getBallotVotes(quorum) {
 	$('#progress2 .progress-bar').html(votesPercentage+'%');
 	if (votesPercentage >= quorum/100) {
 		$('#progress2 .progress-bar').addClass("progress-bar-success");
-	 } else if (votesPercentage >= quorum / 200) {
+	} else if (votesPercentage >= quorum / 200) {
 		$('#progress2 .progress-bar').addClass("progress-bar-warning");
-	 } else {
+	} else {
 		$('#progress2 .progress-bar').addClass("progress-bar-danger");
-	 }
+	}
+	 /* Recent votes */
+	for (const i in votes) {
+		$("#p2 .RecentVotes").append("<tr><td id=\"recentVote" + i + "\">" + votes[i].type.timeAgo + "</td><td>"
+		+ bakerRolls(votes[i].type.source.tz, bakers).toLocaleString() + "</td><td>"+pkh2alias(votes[i].type.source.tz)+"</td><td>"
+		+ votes[i].type.ballot +"</td></tr>");
+	}
+	if (votes.length < PAGE_SIZE)
+			$("#p2 .button").css("display", "none");
+	if (votes.length > 0)
+		$("#p2 .RecentVotesContainer").css("display", "inline-block");
 }
 /*
 	Return number of rolls for each baker and the total number
@@ -111,6 +130,22 @@ async function getBallotResult() {
 	const ballotResult = await fetch(rpc + '/chains/main/blocks/head/votes/ballots')
 		.then(function(ans) {return ans.json();});
 	return ballotResult;
+}
+function loadMoreBallotVotes() {
+	getRecentBallotVotes(++pageCounter).then(votes => {
+		promises = [];
+		for (const vote of votes) {
+			promises.push(timeAgo(vote.block_hash));
+		}
+		for (const i in votes) {
+			$("#p2 .RecentVotes").append("<tr><td id=\"recentVote" + i + "\">" + votes[i].type.timeAgo + "</td><td>"
+			+ bakerRolls(votes[i].type.source.tz, bakers).toLocaleString() + "</td><td>"+pkh2alias(votes[i].type.source.tz)+"</td><td>"
+			+ votes[i].type.ballot +"</td></tr>");
+		}
+		if (votes.length < PAGE_SIZE)
+			$("#p2 .recentVotesContainer .button").css("display", "none");
+	});
+	return false;
 }
 /*
 	### Get Proposal votes ###
@@ -178,6 +213,25 @@ async function getRecentProposalVotes(page = 0) {
 					proposalsFormated = proposalsFormated + '<BR>' + proposal;
 			}
 			vote.type.proposals = proposalsFormated;
+			filteredVotes.push(vote);
+		}
+	}
+	promises = [];
+	for (const vote of filteredVotes) {
+		promises.push(timeAgo(vote.block_hash));
+	}
+	const timeAgos = await Promise.all(promises);
+	for (const i in filteredVotes) {
+		filteredVotes[i].type.timeAgo = timeAgos[i];
+	}
+	return filteredVotes;
+}
+async function getRecentBallotVotes(page = 0) {
+	let votes = await fetch(api + '/v3/operations?type=Ballot&p=' + page + '&number=' + PAGE_SIZE)
+		.then(ans => { return ans.json(); });
+	let filteredVotes = [];
+	for (const vote of votes) {
+		if (vote.type.period === votingPeriod) {
 			filteredVotes.push(vote);
 		}
 	}
