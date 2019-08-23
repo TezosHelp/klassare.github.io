@@ -51,15 +51,15 @@ async function init() {
 async function getBallotVotes(quorum) {
 	let promises = [];
 	promises.push(getBallotResult());
-	promises.push(getRecentBallotVotes());
+	// promises.push(getRecentBallotVotes());
 	promises.push(getRollCount());
 	let proposalResult, votes, totalRolls;
 	await Promise.all(promises)
 		.then(res => {
 			ballotResult = res[0];
-			votes = res[1];
-			bakers = res[2].bakers;
-			totalRolls = res[2].totalRolls;
+			// votes = res[1];
+			bakers = res[1].bakers;
+			totalRolls = res[1].totalRolls;
 		});
 	
 	$('#p2 .a2').html(ballotResult.yay.toLocaleString());
@@ -101,6 +101,7 @@ async function getBallotVotes(quorum) {
 		$('#progress2 .progress-bar').addClass("progress-bar-danger");
 	}
 	 /* Recent votes */
+	votes = await getRecentBallotVotes();
 	for (const i in votes) {
 		$("#p2 .RecentVotes").append("<tr><td id=\"recentVote" + i + "\">" + votes[i].type.timeAgo + "</td><td>"
 		+ bakerRolls(votes[i].type.source.tz, bakers).toLocaleString() + "</td><td>"+pkh2alias(votes[i].type.source.tz)+"</td><td>"
